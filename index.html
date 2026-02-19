@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darija Academy | Elite Experience</title>
+    <title>Darija Academy | Elite Immersion</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -11,371 +11,220 @@
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap');
-        
-        :root {
-            --bg: #050505;
-            --card: rgba(20, 20, 20, 0.6);
-            --primary: #3e81f6;
-            --accent: #c084fc;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: #ffffff;
-            overflow-x: hidden;
-        }
-
+        :root { --bg: #030712; --card: rgba(17, 24, 39, 0.7); --primary: #3b82f6; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #ffffff; }
+        .glass { background: var(--card); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .space-font { font-family: 'Space Grotesk', sans-serif; }
-
-        /* Effet Shimmer pour les boutons */
-        .shimmer {
-            position: relative;
-            overflow: hidden;
-        }
-        .shimmer::after {
-            content: "";
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            animation: shimmer 3s infinite;
-        }
+        .cyber-mode { filter: hue-rotate(90deg) brightness(1.1); font-family: monospace !important; }
+        .shimmer { position: relative; overflow: hidden; }
+        .shimmer::after { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent); transform: rotate(45deg); animation: shimmer 4s infinite; }
         @keyframes shimmer { 0% { transform: translateX(-100%) rotate(45deg); } 100% { transform: translateX(100%) rotate(45deg); } }
-
-        /* Verre dépoli Premium */
-        .glass-card {
-            background: var(--card);
-            backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .glass-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 30px rgba(62, 129, 246, 0.15);
-        }
-
-        /* Easter Egg Matrix Terminal */
-        .cyber-mode {
-            filter: contrast(1.2) brightness(1.1);
-            font-family: 'Courier New', monospace !important;
-        }
-        .cyber-mode .glass-card {
-            border-color: #00ff41 !important;
-            box-shadow: 0 0 15px #00ff4133 !important;
-            background: rgba(0, 20, 0, 0.9) !important;
-        }
-
-        /* Animation Chat */
-        #chat-ui { display: none; animation: slideUp 0.4s ease-out; }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
-<body>
+<body class="transition-all duration-500">
 
-    <nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl z-[1000]">
-        <div class="glass-card rounded-[2rem] px-8 py-4 flex justify-between items-center shadow-2xl">
-            <div class="flex items-center space-x-3 cursor-pointer group" onclick="triggerEasterEgg()">
-                <div id="logo-icon" class="w-10 h-10 bg-gradient-to-tr from-blue-600 to-indigo-500 rounded-xl flex items-center justify-center text-white font-bold transition-transform group-hover:rotate-12">DA</div>
-                <span class="text-lg font-bold tracking-tighter space-font uppercase">Darija <span class="text-blue-500">Academy</span></span>
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-[1000]">
+        <div class="glass rounded-full px-8 py-4 flex justify-between items-center shadow-2xl">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="triggerSecret()">
+                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-bold">DA</div>
+                <span class="text-lg font-bold space-font tracking-tighter">DARIJA ACADEMY</span>
             </div>
-            <div class="hidden md:flex space-x-8 text-[11px] font-bold uppercase tracking-widest text-gray-400">
-                <a href="#news" class="hover:text-white transition">Actualités</a>
-                <a href="#tarifs" class="hover:text-white transition">Tarifs</a>
-                <a href="#avis" class="hover:text-white transition">Communauté</a>
+            <div class="hidden md:flex space-x-8 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                <a href="#actualites" class="hover:text-blue-400 transition">Actualités</a>
+                <a href="#activites" class="hover:text-blue-400 transition">Culture</a>
+                <a href="#tarifs" class="hover:text-blue-400 transition">Tarifs</a>
             </div>
-            <a href="#inscription" class="shimmer bg-white text-black px-6 py-2 rounded-full text-xs font-extrabold hover:scale-105 transition active:scale-95">JOIN NOW</a>
+            <a href="#inscription" class="bg-white text-black px-6 py-2 rounded-full text-xs font-black hover:scale-105 transition">S'INSCRIRE</a>
         </div>
     </nav>
 
-    <section class="relative min-h-screen flex flex-col justify-center items-center px-6 overflow-hidden">
-        <div class="absolute w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full -top-20 -left-20"></div>
-        <div class="absolute w-[400px] h-[400px] bg-purple-600/10 blur-[150px] rounded-full bottom-0 right-0"></div>
+    <section class="pt-48 pb-20 px-6 text-center">
+        <h1 class="text-7xl md:text-9xl font-black space-font tracking-tighter mb-6" data-aos="zoom-out">
+            MAROC <span class="text-blue-600 italic">DIGITAL.</span>
+        </h1>
+        <p class="text-gray-400 max-w-xl mx-auto text-lg font-light">L'académie premium où la tradition marocaine rencontre l'innovation technologique.</p>
+    </section>
 
-        <div class="relative z-10 text-center" data-aos="fade-up">
-            <span class="px-4 py-1 rounded-full border border-blue-500/30 text-blue-400 text-[10px] font-black tracking-[0.3em] uppercase mb-8 inline-block">Apprentissage Nouvelle Génération</span>
-            <h1 class="text-7xl md:text-[110px] font-black space-font leading-none tracking-tighter mb-8">
-                L'ÉLITE DE LA <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 italic">DARIJA.</span>
-            </h1>
-            <p class="text-gray-400 max-w-2xl mx-auto text-lg md:text-xl font-light leading-relaxed mb-12">
-                Oubliez les méthodes scolaires. Apprenez le marocain réel à travers une expérience technologique immersive.
-            </p>
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 justify-center">
-                <a href="#inscription" class="px-10 py-5 bg-blue-600 rounded-2xl font-black text-sm hover:bg-blue-500 transition shadow-2xl shadow-blue-500/30 uppercase tracking-widest">Commencer l'aventure</a>
-                <a href="#avis" class="px-10 py-5 glass-card rounded-2xl font-black text-sm hover:bg-white/5 transition uppercase tracking-widest">Voir les avis</a>
+    <section id="actualites" class="py-24 px-6 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-bold space-font mb-12">NEWS <span class="text-blue-500">& EVENTS</span></h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="md:col-span-2 glass rounded-[2.5rem] overflow-hidden group relative h-[400px]">
+                <img src="https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&w=1200" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition duration-700">
+                <div class="relative p-10 h-full flex flex-col justify-end">
+                    <span class="bg-blue-600 w-fit px-4 py-1 rounded-full text-[10px] font-bold mb-4">DERNIÈRE MINUTE</span>
+                    <h3 class="text-4xl font-black mb-2">Expédition Chefchaouen 2026</h3>
+                    <p class="text-gray-300">Inscriptions ouvertes pour le voyage d'immersion culturelle. Places limitées.</p>
+                </div>
+            </div>
+            <div class="glass rounded-[2.5rem] p-8 flex flex-col justify-center border-emerald-500/20">
+                <div class="text-emerald-500 text-4xl mb-4"><i class="fas fa-users-cog"></i></div>
+                <h3 class="text-xl font-bold mb-2">Recrutement Tuteurs</h3>
+                <p class="text-gray-400 text-sm">Nous recherchons des natifs passionnés pour nos classes virtuelles. Postulez maintenant.</p>
             </div>
         </div>
     </section>
 
-    <section id="news" class="py-24 px-6">
+    <section id="activites" class="py-24 px-6 bg-white/[0.01]">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl font-bold space-font mb-12">ACTUALITÉS <span class="text-blue-500">/ 01</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 h-auto md:h-[600px]">
-                <div class="md:col-span-2 md:row-span-2 glass-card rounded-[2.5rem] p-10 flex flex-col justify-end relative overflow-hidden group">
-                    <img src="https://images.unsplash.com/photo-1539667468225-eebb663053e6?auto=format&fit=crop&w=1000" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition duration-700">
-                    <div class="relative z-10">
-                        <span class="bg-blue-600 px-3 py-1 rounded-full text-[10px] font-bold mb-4 inline-block">IMMERSION 2026</span>
-                        <h3 class="text-3xl font-black mb-4">Expédition Chefchaouen</h3>
-                        <p class="text-gray-300">Un séjour linguistique exclusif pour nos membres Sultan dans la perle du Nord.</p>
-                    </div>
+            <h2 class="text-3xl font-bold space-font mb-12 text-right">IMMERSION <span class="text-blue-500">CULTURELLE</span></h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="group relative rounded-3xl overflow-hidden h-64">
+                    <img src="https://images.unsplash.com/photo-1590603740183-980e7f98e051?auto=format&fit=crop&w=500" class="w-full h-full object-cover group-hover:scale-110 transition">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">Atelier Thé</div>
                 </div>
-                <div class="md:col-span-2 glass-card rounded-[2.5rem] p-8 flex items-center space-x-6 hover:bg-white/5 transition">
-                    <div class="w-20 h-20 bg-blue-500/20 rounded-2xl flex items-center justify-center text-3xl"><i class="fas fa-briefcase text-blue-400"></i></div>
-                    <div>
-                        <h3 class="text-xl font-bold">On Recrute !</h3>
-                        <p class="text-gray-400 text-sm">Nous cherchons 2 formateurs passionnés pour rejoindre l'équipe.</p>
-                    </div>
+                <div class="group relative rounded-3xl overflow-hidden h-64">
+                    <img src="https://images.unsplash.com/photo-1539667468225-eebb663053e6?auto=format&fit=crop&w=500" class="w-full h-full object-cover group-hover:scale-110 transition">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">Calligraphie</div>
                 </div>
-                <div class="md:col-span-2 glass-card rounded-[2.5rem] p-8 flex items-center space-x-6 hover:bg-white/5 transition">
-                    <div class="w-20 h-20 bg-purple-500/20 rounded-2xl flex items-center justify-center text-3xl"><i class="fas fa-calendar-alt text-purple-400"></i></div>
-                    <div>
-                        <h3 class="text-xl font-bold">Session de Printemps</h3>
-                        <p class="text-gray-400 text-sm">Les inscriptions ferment dans 4 jours. Rejoignez les 500 nouveaux élèves.</p>
-                    </div>
+                <div class="group relative rounded-3xl overflow-hidden h-64">
+                    <img src="https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?auto=format&fit=crop&w=500" class="w-full h-full object-cover group-hover:scale-110 transition">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">Artisanat Zellige</div>
+                </div>
+                <div class="group relative rounded-3xl overflow-hidden h-64">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=500" class="w-full h-full object-cover group-hover:scale-110 transition">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">Sessions Gnaoua</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="tarifs" class="py-24 px-6 bg-white/[0.02]">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20">
-                <h2 class="text-4xl font-bold space-font mb-4 italic uppercase">Investissez en vous</h2>
-                <p class="text-gray-500">Choisissez le pack adapté à votre ambition.</p>
+    <section id="tarifs" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+            <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-blue-500/30 transition">
+                <h4 class="text-gray-500 font-bold text-xs uppercase mb-4 tracking-widest">Pack Boussa</h4>
+                <div class="text-5xl font-black space-font mb-6">149 DH</div>
+                <ul class="text-sm space-y-4 text-gray-400 mb-8">
+                    <li>Cours Vidéos HD</li>
+                    <li>Quiz de niveau</li>
+                </ul>
             </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-card p-10 rounded-[3rem] flex flex-col group">
-                    <h4 class="text-gray-500 font-bold text-xs uppercase mb-8">Base</h4>
-                    <div class="text-5xl font-black space-font mb-4">149 DH<span class="text-sm font-light text-gray-500">/mois</span></div>
-                    <ul class="text-sm space-y-4 text-gray-400 mb-12 flex-1 border-t border-white/5 pt-8">
-                        <li><i class="fas fa-check text-blue-500 mr-2"></i> Accès à 150+ Vidéos</li>
-                        <li><i class="fas fa-check text-blue-500 mr-2"></i> Quiz Interactifs</li>
-                    </ul>
-                    <a href="#inscription" class="w-full py-4 text-center glass-card rounded-2xl font-bold group-hover:bg-white group-hover:text-black transition">Choisir</a>
-                </div>
-                <div class="glass-card p-10 rounded-[3rem] flex flex-col border-blue-500/50 bg-blue-600/5 relative scale-105 z-10">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 px-4 py-1 rounded-full text-[10px] font-black">LE PLUS PRISÉ</div>
-                    <h4 class="text-blue-400 font-bold text-xs uppercase mb-8">Chabab (Pro)</h4>
-                    <div class="text-5xl font-black space-font mb-4">349 DH<span class="text-sm font-light text-gray-500">/mois</span></div>
-                    <ul class="text-sm space-y-4 text-gray-200 mb-12 flex-1 border-t border-white/10 pt-8">
-                        <li><i class="fas fa-star text-blue-400 mr-2"></i> Tout du pack Base</li>
-                        <li><i class="fas fa-star text-blue-400 mr-2"></i> 2 Sessions Live / semaine</li>
-                        <li><i class="fas fa-star text-blue-400 mr-2"></i> Coaching par WhatsApp</li>
-                    </ul>
-                    <a href="#inscription" class="w-full py-4 text-center bg-blue-600 rounded-2xl font-black shadow-xl shadow-blue-500/40 hover:scale-105 transition">Démarrer Maintenant</a>
-                </div>
-                <div class="glass-card p-10 rounded-[3rem] flex flex-col group">
-                    <h4 class="text-gray-500 font-bold text-xs uppercase mb-8">Sultan (VIP)</h4>
-                    <div class="text-5xl font-black space-font mb-4">899 DH<span class="text-sm font-light text-gray-500">/mois</span></div>
-                    <ul class="text-sm space-y-4 text-gray-400 mb-12 flex-1 border-t border-white/5 pt-8">
-                        <li><i class="fas fa-crown text-purple-500 mr-2"></i> Tuteur Privé 1-to-1</li>
-                        <li><i class="fas fa-crown text-purple-500 mr-2"></i> Immersion Culturelle</li>
-                        <li><i class="fas fa-crown text-purple-500 mr-2"></i> Voyages Inclus</li>
-                    </ul>
-                    <a href="#inscription" class="w-full py-4 text-center glass-card rounded-2xl font-bold group-hover:bg-white group-hover:text-black transition">Choisir</a>
-                </div>
+            <div class="bg-blue-600 p-10 rounded-[3rem] shadow-2xl scale-105 relative overflow-hidden shimmer">
+                <h4 class="text-blue-100 font-bold text-xs uppercase mb-4 tracking-widest">Pack Chabab</h4>
+                <div class="text-5xl font-black space-font mb-6">349 DH</div>
+                <ul class="text-sm space-y-4 text-white mb-8">
+                    <li>Sessions Live Zoom</li>
+                    <li>Groupe WhatsApp VIP</li>
+                </ul>
+            </div>
+            <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-blue-500/30 transition">
+                <h4 class="text-gray-500 font-bold text-xs uppercase mb-4 tracking-widest">Pack Sultan</h4>
+                <div class="text-5xl font-black space-font mb-6">899 DH</div>
+                <ul class="text-sm space-y-4 text-gray-400 mb-8">
+                    <li>Tuteur Privé 1-on-1</li>
+                    <li>Voyages Inclus</li>
+                </ul>
             </div>
         </div>
     </section>
 
     <section id="avis" class="py-24 px-6">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold space-font mb-16 uppercase italic">Ce qu'ils <span class="text-blue-500">ressentent</span></h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20" id="avis-grid">
-                <div class="glass-card p-8 rounded-[2.5rem]" data-aos="fade-up">
-                    <div class="flex items-center space-x-4 mb-6">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-14 h-14 rounded-full border-2 border-blue-600 p-1">
-                        <div><h4 class="font-bold">Laila Benali</h4><p class="text-[9px] text-gray-500 font-black uppercase">Expatriée (Dubai)</p></div>
+            <h2 class="text-3xl font-bold mb-12 italic uppercase">Témoignages</h2>
+            <div class="grid md:grid-cols-3 gap-6 mb-12" id="avis-grid">
+                <div class="glass p-8 rounded-3xl">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/45.jpg" class="w-12 h-12 rounded-full border-2 border-blue-500">
+                        <div><h4 class="font-bold">Sofia B.</h4><p class="text-[10px] text-gray-500">MRE (France)</p></div>
                     </div>
-                    <p class="text-gray-400 text-sm italic leading-relaxed">"Enfin une plateforme qui respecte l'intelligence de l'élève. On apprend la Darija d'aujourd'hui, pas celle des livres."</p>
+                    <p class="text-sm text-gray-400 italic">"Une approche moderne, je recommande !"</p>
                 </div>
-                <div class="glass-card p-8 rounded-[2.5rem]" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex items-center space-x-4 mb-6">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-14 h-14 rounded-full border-2 border-white/10 p-1">
-                        <div><h4 class="font-bold">Julian Rossi</h4><p class="text-[9px] text-gray-500 font-black uppercase">Chercheur (Italie)</p></div>
-                    </div>
-                    <p class="text-gray-400 text-sm italic leading-relaxed">"The interactive quizzes and the chatbot are life-changing for daily practice. Best investment this year."</p>
                 </div>
-                <div class="glass-card p-8 rounded-[2.5rem]" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex items-center space-x-4 mb-6">
-                        <img src="https://randomuser.me/api/portraits/women/22.jpg" class="w-14 h-14 rounded-full border-2 border-white/10 p-1">
-                        <div><h4 class="font-bold">Sonia K.</h4><p class="text-[9px] text-gray-500 font-black uppercase">MRE (Montréal)</p></div>
-                    </div>
-                    <p class="text-gray-400 text-sm italic leading-relaxed">"Ma famille au Maroc est impressionnée par mon accent. Merci Darija Academy pour ce coaching !"</p>
-                </div>
-                <div class="glass-card p-8 rounded-[2.5rem]" data-aos="fade-up">
-                    <div class="flex items-center space-x-4 mb-6">
-                        <img src="https://randomuser.me/api/portraits/men/67.jpg" class="w-14 h-14 rounded-full border-2 border-white/10 p-1">
-                        <div><h4 class="font-bold">Marc Lefèvre</h4><p class="text-[9px] text-gray-500 font-black uppercase">Directeur Artistique</p></div>
-                    </div>
-                    <p class="text-gray-400 text-sm italic leading-relaxed">"Design incroyable, expérience utilisateur fluide et tuteurs de haut niveau. Rien à dire."</p>
-                </div>
-                <div class="glass-card p-8 rounded-[2.5rem]" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex items-center space-x-4 mb-6">
-                        <img src="https://randomuser.me/api/portraits/women/12.jpg" class="w-14 h-14 rounded-full border-2 border-white/10 p-1">
-                        <div><h4 class="font-bold">Emma Watson</h4><p class="text-[9px] text-gray-500 font-black uppercase">Étudiante</p></div>
-                    </div>
-                    <p class="text-gray-400 text-sm italic leading-relaxed">"Le séjour d'immersion à Chefchaouen a été le déclic. Je parle enfin sans peur !"</p>
-                </div>
-            </div>
-
-            <div class="max-w-3xl mx-auto glass-card p-12 rounded-[3.5rem] border-white/5 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 blur-3xl"></div>
-                <h4 class="text-2xl font-black mb-10 text-center space-font italic">AJOUTER VOTRE <span class="text-blue-500">VOIX</span></h4>
-                <div class="space-y-6">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <input type="text" id="name-in" placeholder="Nom Complet" class="bg-white/5 p-5 rounded-2xl border border-white/5 outline-none focus:border-blue-500 transition">
-                        <input type="text" id="role-in" placeholder="Votre Rôle" class="bg-white/5 p-5 rounded-2xl border border-white/5 outline-none focus:border-blue-500 transition">
-                    </div>
-                    <textarea id="msg-in" placeholder="Votre message..." class="w-full bg-white/5 p-5 rounded-2xl h-32 border border-white/5 outline-none focus:border-blue-500 transition"></textarea>
-                    <button onclick="submitReview()" class="w-full py-5 bg-white text-black font-black rounded-2xl hover:scale-[1.02] transition shadow-2xl active:scale-95">PUBLIER MON TÉMOIGNAGE</button>
+            <div class="max-w-2xl mx-auto glass p-10 rounded-[2.5rem]">
+                <h4 class="text-center font-bold mb-6">LAISSER UN AVIS</h4>
+                <div class="grid gap-4">
+                    <input type="text" id="rev-name" placeholder="Nom" class="bg-white/5 p-4 rounded-xl outline-none border border-white/10 focus:border-blue-500">
+                    <textarea id="rev-msg" placeholder="Votre message..." class="bg-white/5 p-4 rounded-xl h-24 outline-none border border-white/10 focus:border-blue-500"></textarea>
+                    <button onclick="addReview()" class="bg-white text-black py-4 rounded-xl font-bold">PUBLIER</button>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="inscription" class="py-32 px-6">
-        <div class="max-w-5xl mx-auto glass-card p-16 rounded-[4rem] text-center border-blue-500/20 shadow-2xl relative">
-            <div class="absolute inset-0 bg-gradient-to-b from-blue-600/5 to-transparent"></div>
-            <h2 class="text-5xl font-black space-font mb-6 leading-tight">PRÊT À <span class="text-blue-500">DOMINER</span> <br> LA LANGUE ?</h2>
-            <p class="text-gray-400 mb-12">Rejoignez l'élite des élèves de la Darija Academy.</p>
-            <form id="reg-form" class="grid md:grid-cols-2 gap-6 relative z-10">
-                <input type="text" placeholder="Nom et Prénom" required class="bg-white/5 p-5 rounded-2xl border border-white/10 outline-none focus:border-blue-500">
-                <input type="email" placeholder="Email professionnel" required class="bg-white/5 p-5 rounded-2xl border border-white/10 focus:border-blue-500">
-                <button type="submit" class="md:col-span-2 py-6 bg-blue-600 rounded-2xl font-black text-lg tracking-widest uppercase shadow-2xl shadow-blue-500/30 hover:bg-blue-500 transition">VALIDER MON ADHÉSION</button>
+        <div class="max-w-4xl mx-auto glass p-16 rounded-[4rem] border-blue-600/20 relative">
+            <h2 class="text-5xl font-black mb-10 text-center">FINALISER <span class="text-blue-500">L'INSCRIPTION</span></h2>
+            <form id="reg-form" class="grid md:grid-cols-2 gap-6">
+                <input type="text" placeholder="Nom complet" required class="bg-white/5 p-5 rounded-2xl outline-none border border-white/5 focus:border-blue-500">
+                <input type="email" placeholder="Email" required class="bg-white/5 p-5 rounded-2xl outline-none border border-white/5 focus:border-blue-500">
+                <div class="md:col-span-2">
+                    <label class="text-xs font-bold text-gray-500 uppercase mb-3 block tracking-widest">Choisir votre abonnement</label>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="plan" value="Boussa" class="hidden peer" checked>
+                            <div class="p-4 rounded-2xl border border-white/10 peer-checked:border-blue-600 peer-checked:bg-blue-600/10 text-center transition">Boussa (149 DH)</div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="plan" value="Chabab" class="hidden peer">
+                            <div class="p-4 rounded-2xl border border-white/10 peer-checked:border-blue-600 peer-checked:bg-blue-600/10 text-center transition">Chabab (349 DH)</div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="plan" value="Sultan" class="hidden peer">
+                            <div class="p-4 rounded-2xl border border-white/10 peer-checked:border-blue-600 peer-checked:bg-blue-600/10 text-center transition">Sultan (899 DH)</div>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="md:col-span-2 py-6 bg-blue-600 rounded-2xl font-black text-lg hover:bg-blue-500 transition shadow-2xl shadow-blue-500/20">REJOINDRE L'ÉLITE</button>
             </form>
         </div>
     </section>
 
-    <div class="fixed bottom-8 right-8 z-[2000]">
-        <div id="chat-ui" class="glass-card w-[380px] h-[550px] rounded-[2.5rem] mb-6 flex flex-col shadow-2xl overflow-hidden border-white/20">
-            <div class="p-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex justify-between items-center">
-                <div class="flex items-center space-x-3">
-                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span class="font-bold space-font tracking-widest text-xs uppercase">Darija AI Assistant</span>
-                </div>
-                <button onclick="toggleChat()"><i class="fas fa-times opacity-60 hover:opacity-100"></i></button>
+    <div class="fixed bottom-6 right-6 z-[2000]">
+        <div id="chat-ui" class="hidden glass w-[350px] h-[500px] rounded-[2.5rem] flex-col shadow-2xl border-white/10 overflow-hidden mb-6">
+            <div class="p-6 bg-blue-600 font-bold flex justify-between items-center">
+                <span>DARIJA AI</span>
+                <button onclick="toggleChat()"><i class="fas fa-times"></i></button>
             </div>
-            <div id="chat-box" class="flex-1 p-6 overflow-y-auto space-y-6 text-[12px] bg-black/40">
-                <div class="flex items-start space-x-3">
-                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-[10px] shrink-0">AI</div>
-                    <div class="bg-white/5 p-4 rounded-2xl rounded-tl-none border border-white/5 leading-relaxed">
-                        Salam ! Je suis votre tuteur IA. Je connais tout sur Darija Academy. Quelle est votre question ?
-                    </div>
-                </div>
+            <div id="chat-box" class="flex-1 p-6 overflow-y-auto text-xs space-y-4">
+                <div class="bg-white/5 p-3 rounded-2xl rounded-tl-none">Salam ! Je suis votre assistant IA. Comment puis-je vous aider ?</div>
             </div>
-            <div id="ai-typing" class="px-6 py-2 hidden">
-                <span class="text-[10px] text-blue-400 font-bold animate-pulse uppercase tracking-widest">L'IA analyse votre requête...</span>
-            </div>
-            <div class="p-4 bg-white/5 border-t border-white/5 flex items-center space-x-3">
-                <input type="text" id="chat-input" class="bg-transparent flex-1 outline-none text-sm px-2" placeholder="Posez une question sur les prix, les cours...">
-                <button onclick="sendChat()" class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center hover:scale-105 transition active:scale-95"><i class="fas fa-paper-plane text-xs"></i></button>
+            <div class="p-4 bg-white/5 border-t border-white/5 flex">
+                <input type="text" id="chat-in" class="bg-transparent flex-1 outline-none text-xs" placeholder="Posez une question...">
+                <button onclick="sendAI()" class="text-blue-500"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
-        <button onclick="toggleChat()" class="shimmer w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-2xl text-white shadow-2xl hover:scale-110 hover:-rotate-6 transition-all duration-300 active:scale-90">
-            <i class="fas fa-robot"></i>
-        </button>
+        <button onclick="toggleChat()" class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-2xl shadow-2xl animate-bounce"><i class="fas fa-robot"></i></button>
     </div>
 
-    <footer class="py-20 text-center border-t border-white/5">
-        <div class="flex justify-center space-x-12 mb-10">
-            <a href="#" class="text-gray-500 hover:text-pink-500 transition text-2xl"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="text-gray-500 hover:text-white transition text-2xl"><i class="fab fa-tiktok"></i></a>
-            <a href="#" class="text-gray-500 hover:text-blue-400 transition text-2xl"><i class="fab fa-linkedin"></i></a>
-        </div>
-        <p class="text-[10px] font-bold text-gray-700 space-font tracking-[0.6em] uppercase">© 2026 DARIJA ACADEMY | Designed for the 1%</p>
+    <footer class="py-20 text-center opacity-40 text-[10px] tracking-[0.5em] font-bold">
+        © 2026 DARIJA ACADEMY | PREMIUM LINGUISTICS
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: true });
-
-        // EASTER EGG SYSTEM
-        let counts = 0;
-        function triggerEasterEgg() {
-            counts++;
-            if(counts === 5) {
-                document.body.classList.toggle('cyber-mode');
-                alert("SYSTEM BREACH: Cyber-Interface activée.");
-                counts = 0;
-            }
-        }
-
-        // CHATBOT LOGIC
-        function toggleChat() {
-            const chat = document.getElementById('chat-ui');
-            chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
-        }
-
-        function sendChat() {
-            const input = document.getElementById('chat-input');
+        AOS.init();
+        let clicks = 0;
+        function triggerSecret() { clicks++; if(clicks === 5) { document.body.classList.toggle('cyber-mode'); alert("SYSTÈME PASSE EN MODE CYBER-DARIJA."); } }
+        
+        function toggleChat() { const ui = document.getElementById('chat-ui'); ui.style.display = ui.style.display === 'flex' ? 'none' : 'flex'; }
+        
+        function sendAI() {
+            const cin = document.getElementById('chat-in');
             const box = document.getElementById('chat-box');
-            const typing = document.getElementById('ai-typing');
-            if(!input.value) return;
-
-            box.innerHTML += `
-                <div class="flex justify-end">
-                    <div class="bg-blue-600 p-4 rounded-2xl rounded-tr-none max-w-[80%] font-bold shadow-lg shadow-blue-600/20 italic">"${input.value}"</div>
-                </div>
-            `;
-            const query = input.value.toLowerCase();
-            input.value = "";
-            box.scrollTop = box.scrollHeight;
-
-            typing.classList.remove('hidden');
-
+            if(!cin.value) return;
+            box.innerHTML += `<div class="bg-blue-600/20 p-3 rounded-2xl rounded-tr-none ml-auto text-right italic font-bold">"${cin.value}"</div>`;
+            const q = cin.value.toLowerCase(); cin.value = "";
             setTimeout(() => {
-                typing.classList.add('hidden');
-                let res = "C'est une excellente question. Pour des détails précis, je vous suggère de contacter notre support VIP sur WhatsApp !";
-                
-                if(query.includes("prix") || query.includes("combien")) res = "Nos abonnements sont : Base (149 DH), Chabab (349 DH) et Sultan (899 DH). Le pack Chabab est notre best-seller.";
-                if(query.includes("salam")) res = "Salam ! Kidayr ? Je suis là pour t'aider à parler Darija comme un vrai Marocain.";
-                if(query.includes("chefchaouen")) res = "Notre expédition à Chefchaouen est prévue pour mai 2026. Elle est incluse dans le pack Sultan !";
-                if(query.includes("recrute") || query.includes("job")) res = "Absolument, nous cherchons des talents. Envoyez votre candidature via la section Actualités.";
-
-                box.innerHTML += `
-                    <div class="flex items-start space-x-3">
-                        <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-[10px] shrink-0">AI</div>
-                        <div class="bg-white/5 p-4 rounded-2xl rounded-tl-none border border-white/5 leading-relaxed">${res}</div>
-                    </div>
-                `;
+                let r = "Je suis un LLM en cours d'apprentissage. Pour les tarifs, consultez la section dédiée !";
+                if(q.includes("prix")) r = "Le pack Chabab à 349 DH est notre meilleur rapport qualité/prix.";
+                if(q.includes("voyage")) r = "Le prochain voyage à Chefchaouen est prévu pour Mai 2026.";
+                box.innerHTML += `<div class="bg-white/10 p-3 rounded-2xl rounded-tl-none animate-pulse">${r}</div>`;
                 box.scrollTop = box.scrollHeight;
-            }, 1500);
+            }, 1000);
         }
 
-        // SUBMIT REVIEW
-        function submitReview() {
-            const name = document.getElementById('name-in').value;
-            const role = document.getElementById('role-in').value;
-            const msg = document.getElementById('msg-in').value;
-            if(!name || !msg) return alert("Veuillez remplir les champs.");
-
-            const grid = document.getElementById('avis-grid');
-            const html = `
-                <div class="glass-card p-8 rounded-[2.5rem] border-blue-500 border-2 animate-pulse">
-                    <div class="flex items-center space-x-4 mb-6">
-                        <img src="https://i.pravatar.cc/150?u=${name}" class="w-14 h-14 rounded-full border-2 border-blue-600 p-1">
-                        <div><h4 class="font-bold">${name}</h4><p class="text-[9px] text-gray-500 font-black uppercase">${role || 'Membre Élite'}</p></div>
-                    </div>
-                    <p class="text-gray-400 text-sm italic leading-relaxed">"${msg}"</p>
-                </div>
-            `;
-            grid.insertAdjacentHTML('afterbegin', html);
-            document.getElementById('name-in').value = "";
-            document.getElementById('role-in').value = "";
-            document.getElementById('msg-in').value = "";
+        function addReview() {
+            const n = document.getElementById('rev-name').value;
+            const m = document.getElementById('rev-msg').value;
+            if(!n || !m) return;
+            const wall = document.getElementById('avis-grid');
+            wall.insertAdjacentHTML('afterbegin', `<div class="glass p-8 rounded-3xl border-blue-500 border animate-bounce"><div class="flex items-center space-x-4 mb-4"><img src="https://i.pravatar.cc/150?u=${n}" class="w-12 h-12 rounded-full"><div><h4 class="font-bold">${n}</h4></div></div><p class="text-sm italic">"${m}"</p></div>`);
         }
 
-        // REG FORM
         document.getElementById('reg-form').onsubmit = (e) => {
             e.preventDefault();
-            confetti({
-                particleCount: 150,
-                spread: 100,
-                origin: { y: 0.7 },
-                colors: ['#3e81f6', '#ffffff', '#c084fc']
-            });
-            alert("MABROUK ! Votre dossier est en cours de traitement par nos équipes.");
+            const plan = document.querySelector('input[name="plan"]:checked').value;
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            alert(`Mabrouk ! Inscription enregistrée pour le pack ${plan}. Un conseiller vous contactera !`);
             e.target.reset();
         }
     </script>
