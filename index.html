@@ -3,157 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darija Academy | Actualités & Immersion</title>
+    <title>Darija Academy | Developer Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #030712; color: #f9fafb; font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .gradient-blue { background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); }
-        .news-card:hover img { transform: scale(1.1); transition: 0.5s; }
-        .modal-active { display: flex !important; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap');
+        :root { --accent: #3b82f6; --dark: #030712; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--dark); color: #f8fafc; }
+        .glass { background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .code-font { font-family: 'Fira Code', monospace; }
+        
+        /* Surprise : Terminal Mode */
+        #dev-console { display: none; position: fixed; top: 20%; left: 50%; transform: translateX(-50%); width: 90%; max-width: 600px; z-index: 1000; }
+        
+        /* Plan Highlighting */
+        .plan-card:hover { transform: scale(1.02); border-color: var(--accent); box-shadow: 0 0 40px rgba(59, 130, 246, 0.1); transition: 0.4s; }
+        .avatar-glow { box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
     </style>
 </head>
 <body class="overflow-x-hidden">
 
-    <div id="confirmModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-        <div class="glass p-10 rounded-[2.5rem] max-w-sm w-full text-center border-emerald-500/30 border-2">
-            <div class="w-20 h-20 bg-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">
-                <i class="fas fa-check-circle"></i>
+    <div id="dev-console" class="glass rounded-xl overflow-hidden border border-blue-500/50 shadow-2xl">
+        <div class="bg-gray-800 px-4 py-2 flex justify-between items-center border-b border-white/10">
+            <span class="text-xs code-font text-blue-400 font-bold">darija_academy_terminal > root</span>
+            <button onclick="toggleDevConsole()" class="text-red-500 text-xs">EXIT</button>
+        </div>
+        <div class="p-6 bg-black/90 h-64 overflow-y-auto code-font text-sm text-green-400">
+            <p>> Initializing Darija Academy Core...</p>
+            <p>> Loading price_engine.js [OK]</p>
+            <p>> Accessing customer_database [ENCRYPTED]</p>
+            <p class="text-blue-400 mt-4">> Conseil : Cliquez sur le logo 5 fois pour activer le mode Darkest Night.</p>
+        </div>
+    </div>
+
+    <div id="successModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 backdrop-blur-xl p-4">
+        <div class="glass p-10 rounded-[2.5rem] max-w-sm w-full text-center border-blue-600 border-2">
+            <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-3xl animate-ping">
+                <i class="fas fa-rocket"></i>
             </div>
-            <h2 class="text-2xl font-black mb-2">Inscription Reçue !</h2>
-            <p class="text-gray-400 text-sm mb-8">Marhba bik ! Un conseiller pédagogique vous contactera par WhatsApp pour finaliser votre accès.</p>
-            <button onclick="closeModal()" class="w-full py-3 gradient-blue rounded-xl font-bold shadow-lg shadow-blue-500/20">Fermer</button>
+            <h2 class="text-3xl font-black mb-4">Bravo Dev !</h2>
+            <p class="text-gray-400 mb-8 text-sm">Votre inscription est compilée avec succès. On se retrouve sur WhatsApp.</p>
+            <button onclick="closeModal()" class="w-full py-4 bg-blue-600 rounded-2xl font-bold shadow-lg">Lancer le programme</button>
         </div>
     </div>
 
     <nav class="fixed w-full z-50 px-6 py-4">
-        <div class="max-w-7xl mx-auto glass rounded-2xl px-8 py-4 flex justify-between items-center shadow-xl">
-            <div class="flex items-center space-x-2">
-                <span class="text-2xl font-black tracking-tighter text-blue-500 italic">DARIJA ACADEMY</span>
+        <div class="max-w-7xl mx-auto glass rounded-2xl px-8 py-4 flex justify-between items-center border-white/5">
+            <div class="flex items-center space-x-2 cursor-pointer" onclick="secretTrigger()">
+                <div class="w-10 h-10 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center font-bold text-white shadow-lg">D</div>
+                <span class="text-xl font-black tracking-tighter">DARIJA ACADEMY</span>
             </div>
-            <div class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-gray-400">
-                <a href="#news" class="hover:text-blue-400 transition">Actualités</a>
-                <a href="#activites" class="hover:text-blue-400 transition">Activités</a>
+            <div class="hidden md:flex space-x-8 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">
+                <a href="#tarifs" class="hover:text-blue-400 transition">Tarifs</a>
                 <a href="#avis" class="hover:text-blue-400 transition">Avis</a>
-                <a href="#inscription" class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-500">S'inscrire</a>
+                <a href="#news" class="hover:text-blue-400 transition">Actualités</a>
             </div>
+            <button onclick="toggleDevConsole()" class="hidden md:block text-xs code-font text-blue-600 border border-blue-600/30 px-3 py-1 rounded hover:bg-blue-600 hover:text-white transition">DEBUG_MODE</button>
         </div>
     </nav>
 
-    <header class="pt-48 pb-20 px-6 text-center">
-        <div data-aos="fade-up">
-            <h1 class="text-6xl md:text-8xl font-black mb-6 leading-none">Vivez le Maroc <br><span class="text-blue-500 underline decoration-indigo-500">Parlez Darija.</span></h1>
-            <p class="text-gray-400 max-w-xl mx-auto text-lg mb-10">La plateforme n°1 pour apprendre la langue et découvrir la culture marocaine authentique.</p>
+    <header class="pt-52 pb-32 px-6 text-center">
+        <div class="max-w-5xl mx-auto" data-aos="zoom-in">
+            <span class="text-blue-500 code-font text-sm mb-4 block animate-pulse">while(alive) { learn(darija); }</span>
+            <h1 class="text-6xl md:text-8xl font-black leading-none mb-8 tracking-tighter">
+                Codez votre futur <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">en Darija.</span>
+            </h1>
+            <p class="text-gray-500 max-w-2xl mx-auto mb-12">L'académie préférée des expatriés et des passionnés. Apprenez avec une structure logique et des prix transparents.</p>
         </div>
     </header>
 
-    <section id="news" class="py-24 px-6 bg-white/5">
+    <section id="tarifs" class="py-24 px-6 bg-slate-900/10">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-16">
-                <h2 class="text-4xl font-black italic">DERNIÈRES <span class="text-blue-500">INFOS</span></h2>
-                <div class="h-1 w-20 bg-blue-600 mt-2"></div>
-            </div>
-
+            <h2 class="text-4xl font-black mb-16 text-center italic">ABONNEMENTS <span class="text-blue-600">PREMIUM</span></h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <article class="news-card glass rounded-[2rem] overflow-hidden group" data-aos="fade-up">
-                    <div class="h-56 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800" class="w-full h-full object-cover transition duration-500">
-                        <span class="absolute top-4 left-4 bg-blue-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Ouvert</span>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-xl font-bold mb-4">Inscriptions Session 2026</h3>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Les portes sont ouvertes ! Rejoignez nos nouveaux groupes de niveau débutant et intermédiaire dès lundi prochain.</p>
-                        <a href="#inscription" class="text-blue-400 font-bold flex items-center group-hover:translate-x-2 transition">Réserver ma place <i class="fas fa-arrow-right ml-2"></i></a>
-                    </div>
-                </article>
-
-                <article class="news-card glass rounded-[2rem] overflow-hidden group" data-aos="fade-up" data-aos-delay="100">
-                    <div class="h-56 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1539667468225-eebb663053e6?auto=format&fit=crop&w=800" class="w-full h-full object-cover transition duration-500">
-                        <span class="absolute top-4 left-4 bg-purple-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Immersion</span>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-xl font-bold mb-4">Voyage : Cap sur Chefchaouen</h3>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Un séjour 100% Darija ! 3 jours dans la ville bleue pour pratiquer vos acquis avec les locaux dans un cadre magique.</p>
-                        <a href="https://wa.me/212600000000" class="text-purple-400 font-bold flex items-center group-hover:translate-x-2 transition">Voir le programme <i class="fas fa-arrow-right ml-2"></i></a>
-                    </div>
-                </article>
-
-                <article class="news-card glass rounded-[2rem] overflow-hidden group border-2 border-blue-500/20" data-aos="fade-up" data-aos-delay="200">
-                    <div class="h-56 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800" class="w-full h-full object-cover transition duration-500">
-                        <span class="absolute top-4 left-4 bg-emerald-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Recrutement</span>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-xl font-bold mb-4">Rejoignez notre Équipe !</h3>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Nous recherchons un(e) formateur/trice passionné(e) maîtrisant parfaitement les bases de la Darija pour nos cours du soir.</p>
-                        <a href="mailto:job@darijaacademy.com" class="text-emerald-400 font-bold flex items-center group-hover:translate-x-2 transition">Postuler ici <i class="fas fa-paper-plane ml-2"></i></a>
-                    </div>
-                </article>
+                <div class="glass p-10 rounded-[3rem] plan-card border-white/5">
+                    <h3 class="text-xl font-bold mb-2">Pack Boussa</h3>
+                    <p class="text-gray-500 text-xs mb-8">Pour les bases essentielles.</p>
+                    <div class="text-5xl font-black mb-10 italic">149 DH<span class="text-sm font-normal text-gray-600">/mois</span></div>
+                    <ul class="space-y-4 mb-10 text-sm text-gray-400">
+                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Accès à 15 vidéos HD</li>
+                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Quiz hebdo</li>
+                        <li><i class="fas fa-times text-red-900 mr-2"></i> Coaching 1-on-1</li>
+                    </ul>
+                    <a href="#inscription" class="block w-full text-center py-4 rounded-2xl border border-white/10 hover:bg-white/5 font-bold transition">Choisir ce plan</a>
+                </div>
+                <div class="glass p-10 rounded-[3rem] plan-card border-blue-600/50 relative transform md:-translate-y-4 bg-blue-600/5">
+                    <div class="absolute top-0 right-10 bg-blue-600 text-white text-[10px] px-4 py-1 rounded-b-xl font-bold uppercase">Recommandé</div>
+                    <h3 class="text-xl font-bold mb-2">Pack Chabab</h3>
+                    <p class="text-gray-400 text-xs mb-8">Le choix des élèves sérieux.</p>
+                    <div class="text-5xl font-black mb-10 italic">349 DH<span class="text-sm font-normal text-gray-600">/mois</span></div>
+                    <ul class="space-y-4 mb-10 text-sm">
+                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Sessions Live Groupées</li>
+                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Groupe WhatsApp VIP</li>
+                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Certificat de réussite</li>
+                    </ul>
+                    <a href="#inscription" class="block w-full text-center py-4 rounded-2xl bg-blue-600 font-bold hover:bg-blue-500 transition shadow-lg shadow-blue-600/20">Démarrer Pro</a>
+                </div>
+                <div class="glass p-10 rounded-[3rem] plan-card border-white/5">
+                    <h3 class="text-xl font-bold mb-2">Pack Sultan</h3>
+                    <p class="text-gray-500 text-xs mb-8">Immersion totale & Privée.</p>
+                    <div class="text-5xl font-black mb-10 italic">899 DH<span class="text-sm font-normal text-gray-600">/mois</span></div>
+                    <ul class="space-y-4 mb-10 text-sm text-gray-400">
+                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Tuteur privé dédié</li>
+                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Matériel envoyé chez vous</li>
+                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Accès à tous les voyages</li>
+                    </ul>
+                    <a href="#inscription" class="block w-full text-center py-4 rounded-2xl border border-white/10 hover:bg-white/5 font-bold transition">Devenir Sultan</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="avis" class="py-24 px-6">
+    <section id="avis" class="py-24 px-6 bg-slate-900/5">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-center text-3xl font-black mb-16 uppercase tracking-widest text-blue-500">La Voix de nos Étudiants</h2>
-            <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-4" id="reviews-container">
-                <div class="glass p-6 rounded-2xl text-xs" data-aos="zoom-in">
-                    <div class="flex text-yellow-500 mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="text-gray-400 mb-4 italic">"J'ai appris plus en 2 semaines ici qu'en 1 an tout seul."</p>
-                    <div class="font-bold">- Mark S. (USA)</div>
+            <h2 class="text-3xl font-black mb-16 italic uppercase"><span class="text-blue-500">02.</span> Témoignages Clients</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20" id="review-wall">
+                <div class="glass p-8 rounded-[2.5rem] relative" data-aos="fade-up">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-14 h-14 rounded-full avatar-glow border-2 border-blue-500">
+                        <div><h4 class="font-bold">Sofia Benali</h4><p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Étudiante Pro</p></div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic leading-relaxed">"Incroyable ! J'ai pu discuter avec ma belle-famille au Maroc après seulement 3 mois de cours. La pédagogie est top."</p>
+                    <div class="mt-4 text-yellow-500 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                 </div>
-                <div class="glass p-6 rounded-2xl text-xs" data-aos="zoom-in">
-                    <div class="flex text-yellow-500 mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="text-gray-400 mb-4 italic">"Les sorties culturelles sont le vrai point fort de l'académie."</p>
-                    <div class="font-bold">- Camille L. (France)</div>
+                <div class="glass p-8 rounded-[2.5rem] relative" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-14 h-14 rounded-full border-2 border-white/10">
+                        <div><h4 class="font-bold">Jean-Marc Dupuis</h4><p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Expatrié Casa</p></div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic leading-relaxed">"Le pack Sultan vaut vraiment le coup pour progresser vite quand on travaille. Mon prof Reda est exceptionnel."</p>
+                    <div class="mt-4 text-yellow-500 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                 </div>
+                <div class="glass p-8 rounded-[2.5rem] relative" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/85.jpg" class="w-14 h-14 rounded-full border-2 border-white/10">
+                        <div><h4 class="font-bold">Kevin Smith</h4><p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Touriste Curieux</p></div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic leading-relaxed">"The best way to learn Darija. Prices are very low compared to the value you get. Highly recommended!"</p>
+                    <div class="mt-4 text-yellow-500 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                 </div>
-            
-            <div class="mt-16 max-w-xl mx-auto glass p-8 rounded-3xl border-dashed border-white/20">
-                <h4 class="font-bold mb-6 text-center">Partagez votre avis</h4>
-                <div class="flex justify-center space-x-2 text-xl text-gray-700 mb-4" id="star-box">
-                    <i class="fas fa-star cursor-pointer hover:text-yellow-500" data-v="1"></i>
-                    <i class="fas fa-star cursor-pointer hover:text-yellow-500" data-v="2"></i>
-                    <i class="fas fa-star cursor-pointer hover:text-yellow-500" data-v="3"></i>
-                    <i class="fas fa-star cursor-pointer hover:text-yellow-500" data-v="4"></i>
-                    <i class="fas fa-star cursor-pointer hover:text-yellow-500" data-v="5"></i>
+            </div>
+
+            <div class="max-w-xl mx-auto glass p-10 rounded-[3rem] border-white/10">
+                <h4 class="text-xl font-bold mb-6 text-center">Partagez votre avis</h4>
+                <div class="space-y-4">
+                    <div class="flex space-x-4">
+                        <input type="text" id="revName" placeholder="Nom Complet" class="w-1/2 bg-white/5 p-4 rounded-xl outline-none focus:border-blue-500 border border-transparent">
+                        <input type="text" id="revImg" placeholder="URL Image Avatar" class="w-1/2 bg-white/5 p-4 rounded-xl outline-none focus:border-blue-500 border border-transparent">
+                    </div>
+                    <textarea id="revMsg" placeholder="Votre message..." class="w-full bg-white/5 p-4 rounded-xl h-24 outline-none focus:border-blue-500 border border-transparent"></textarea>
+                    <button onclick="postReview()" class="w-full py-4 bg-white text-black font-black rounded-xl hover:bg-gray-200 transition">Publier avec succès</button>
                 </div>
-                <textarea id="revText" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none mb-4 h-24" placeholder="Votre message..."></textarea>
-                <button onclick="submitReview()" class="w-full py-3 border border-blue-500 text-blue-500 font-bold rounded-xl hover:bg-blue-500 hover:text-white transition">Publier l'avis</button>
             </div>
         </div>
     </section>
 
-    <section id="inscription" class="py-24 px-6 bg-blue-600/5">
-        <div class="max-w-4xl mx-auto glass p-12 rounded-[3rem] border-white/5 shadow-2xl">
-            <h2 class="text-4xl font-black mb-8 italic">Inscription <span class="text-blue-500">Prioritaire</span></h2>
-            <form id="regForm" class="grid md:grid-cols-2 gap-8">
-                <input type="text" placeholder="Prénom & Nom" required class="bg-white/5 border-b border-white/20 py-4 outline-none focus:border-blue-500">
-                <input type="email" placeholder="Email" required class="bg-white/5 border-b border-white/20 py-4 outline-none focus:border-blue-500">
-                <input type="tel" placeholder="Numéro WhatsApp" required class="bg-white/5 border-b border-white/20 py-4 outline-none focus:border-blue-500">
-                <select class="bg-slate-800 border-none rounded-xl p-4 outline-none cursor-pointer">
-                    <option>Pack Débutant (149 DH)</option>
-                    <option>Pack Intensif (349 DH)</option>
+    <section id="news" class="py-24 px-6 bg-blue-600/5">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-black mb-16 italic text-center underline decoration-blue-500">ACTUALITÉS <span class="text-gray-500">& RECRUTEMENT</span></h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass group overflow-hidden rounded-[2.5rem]">
+                    <div class="h-60 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-4 left-4 bg-emerald-600 px-3 py-1 rounded-full text-[10px] font-bold">HIRING</div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold mb-4">On recrute un Dev & Formateur !</h3>
+                        <p class="text-gray-400 text-sm">Vous maîtrisez la Darija et le JavaScript ? On a besoin de vous pour nos nouveaux cours interactifs.</p>
+                    </div>
+                </div>
+                <div class="glass group overflow-hidden rounded-[2.5rem]">
+                    <div class="h-60 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1539667468225-eebb663053e6" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-4 left-4 bg-blue-600 px-3 py-1 rounded-full text-[10px] font-bold">TRAVEL</div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold mb-4">Voyage à Chefchaouen : Complet !</h3>
+                        <p class="text-gray-400 text-sm">Prochaine session en Mai 2026. Préparez vos appareils photos et vos lexiques.</p>
+                    </div>
+                </div>
+                <div class="glass group overflow-hidden rounded-[2.5rem]">
+                    <div class="h-60 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-4 left-4 bg-purple-600 px-3 py-1 rounded-full text-[10px] font-bold">OPEN</div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold mb-4">Inscriptions 2026 Ouvertes</h3>
+                        <p class="text-gray-400 text-sm">Venez valider votre niveau avec nos tuteurs natifs. Session Printemps disponible.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="inscription" class="py-32 px-6">
+        <div class="max-w-4xl mx-auto glass p-16 rounded-[4rem] border-white/5 shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-blue-600/10 blur-[100px] rounded-full"></div>
+            <h2 class="text-4xl font-black mb-12">REJOINDRE LA <span class="text-blue-500">TEAM.</span></h2>
+            <form id="regForm" class="grid md:grid-cols-2 gap-8 relative z-10">
+                <input type="text" placeholder="Full Name" required class="bg-white/5 p-4 rounded-xl border border-white/10 outline-none focus:border-blue-500">
+                <input type="email" placeholder="Email Address" required class="bg-white/5 p-4 rounded-xl border border-white/10 outline-none focus:border-blue-500">
+                <input type="tel" placeholder="WhatsApp Number" required class="bg-white/5 p-4 rounded-xl border border-white/10 outline-none focus:border-blue-500">
+                <select class="bg-slate-800 p-4 rounded-xl border border-white/10 outline-none cursor-pointer">
+                    <option>Pack Boussa (149 DH)</option>
+                    <option>Pack Chabab (349 DH)</option>
                     <option>Pack Sultan (899 DH)</option>
                 </select>
-                <button type="submit" class="md:col-span-2 py-5 gradient-blue rounded-2xl font-black tracking-widest uppercase hover:scale-[1.02] transition">Lancer mon aventure</button>
+                <button type="submit" class="md:col-span-2 py-5 bg-blue-600 rounded-2xl font-black tracking-widest shadow-xl shadow-blue-600/30 hover:bg-blue-500 transition">COMPILE & REGISTER</button>
             </form>
         </div>
     </section>
 
     <footer class="py-20 px-6 border-t border-white/5">
-        <div class="max-w-7xl mx-auto text-center">
-            <div class="flex justify-center space-x-8 mb-12 text-3xl">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+            <div class="flex space-x-8 text-2xl text-gray-500">
                 <a href="#" class="hover:text-pink-500 transition"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="hover:text-white transition text-gray-500"><i class="fab fa-tiktok"></i></a>
-                <a href="#" class="hover:text-blue-600 transition"><i class="fab fa-linkedin"></i></a>
-                <a href="https://wa.me/212600000000" class="hover:text-green-500 transition"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fab fa-tiktok"></i></a>
+                <a href="#" class="hover:text-blue-500 transition"><i class="fab fa-linkedin"></i></a>
+                <a href="https://wa.me/212600000000" class="hover:text-green-400 transition"><i class="fab fa-whatsapp"></i></a>
             </div>
-            <p class="text-gray-600 text-sm">© 2026 Darija Academy. Tous droits réservés. <br>Conçu pour l'excellence linguistique au Maroc.</p>
+            <div class="text-center md:text-right">
+                <p class="text-[10px] code-font text-gray-600 tracking-widest uppercase">System Status: Active | Version: 2.0.4</p>
+                <p class="text-xs text-gray-500 mt-2">© 2026 Darija Academy. Built for Developers, By Developers.</p>
+            </div>
         </div>
     </footer>
 
@@ -161,39 +234,60 @@
     <script>
         AOS.init({ duration: 1000, once: true });
 
-        // MODAL LOGIC
-        const form = document.getElementById('regForm');
-        form.onsubmit = (e) => {
-            e.preventDefault();
-            document.getElementById('confirmModal').classList.add('modal-active');
-            form.reset();
-        };
-        function closeModal() {
-            document.getElementById('confirmModal').classList.remove('modal-active');
+        // SURPRISE : GESTION CONSOLE
+        let clickCount = 0;
+        function secretTrigger() {
+            clickCount++;
+            if(clickCount >= 5) {
+                document.body.style.filter = "invert(1) hue-rotate(180deg)";
+                console.log("SURPRISE: Dark Mode Ultimate activated.");
+            }
         }
 
-        // STAR SYSTEM
-        const stars = document.querySelectorAll('#star-box i');
-        let selected = 0;
-        stars.forEach(s => {
-            s.onclick = () => {
-                selected = s.dataset.v;
-                stars.forEach((st, i) => st.classList.toggle('text-yellow-500', i < selected));
-            }
+        window.addEventListener('keydown', (e) => {
+            if(e.shiftKey && e.key === 'D') toggleDevConsole();
         });
 
-        // SUBMIT REVIEW
-        function submitReview() {
-            const txt = document.getElementById('revText').value;
-            if(!txt || selected === 0) return alert("Notez et écrivez un message !");
-            const container = document.getElementById('reviews-container');
-            const review = `<div class="glass p-6 rounded-2xl text-xs border-blue-500/50 border animate-pulse">
-                <div class="flex text-yellow-500 mb-3">${'<i class="fas fa-star"></i>'.repeat(selected)}</div>
-                <p class="text-gray-400 mb-4 italic">"${txt}"</p>
-                <div class="font-bold">- Nouveau Étudiant</div>
-            </div>`;
-            container.insertAdjacentHTML('afterbegin', review);
-            document.getElementById('revText').value = "";
+        function toggleDevConsole() {
+            const con = document.getElementById('dev-console');
+            con.style.display = (con.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // FORMULAIRE & MODAL
+        document.getElementById('regForm').onsubmit = (e) => {
+            e.preventDefault();
+            document.getElementById('successModal').classList.remove('hidden');
+            document.getElementById('successModal').classList.add('flex');
+            e.target.reset();
+        };
+
+        function closeModal() {
+            document.getElementById('successModal').classList.add('hidden');
+            document.getElementById('successModal').classList.remove('flex');
+        }
+
+        // POST REVIEW
+        function postReview() {
+            const name = document.getElementById('revName').value;
+            const img = document.getElementById('revImg').value || 'https://via.placeholder.com/150';
+            const msg = document.getElementById('revMsg').value;
+            
+            if(!name || !msg) return alert("Veuillez remplir les champs obligatoires.");
+
+            const wall = document.getElementById('review-wall');
+            const reviewHtml = `
+                <div class="glass p-8 rounded-[2.5rem] relative animate-pulse">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <img src="${img}" class="w-14 h-14 rounded-full border-2 border-blue-500">
+                        <div><h4 class="font-bold">${name}</h4><p class="text-[10px] text-gray-500 uppercase">New Student</p></div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic italic">"${msg}"</p>
+                    <div class="mt-4 text-yellow-500 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                </div>
+            `;
+            wall.insertAdjacentHTML('afterbegin', reviewHtml);
+            document.getElementById('revName').value = '';
+            document.getElementById('revMsg').value = '';
         }
     </script>
 </body>
