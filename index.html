@@ -1,231 +1,461 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darija Academy | Elite Immersion</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Darija Academy - Apprenez la Darija Facilement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap');
-        :root { --bg: #030712; --card: rgba(17, 24, 39, 0.7); --primary: #3b82f6; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #ffffff; }
-        .glass { background: var(--card); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .space-font { font-family: 'Space Grotesk', sans-serif; }
-        .cyber-mode { filter: hue-rotate(90deg) brightness(1.1); font-family: monospace !important; }
-        .shimmer { position: relative; overflow: hidden; }
-        .shimmer::after { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent); transform: rotate(45deg); animation: shimmer 4s infinite; }
-        @keyframes shimmer { 0% { transform: translateX(-100%) rotate(45deg); } 100% { transform: translateX(100%) rotate(45deg); } }
+        /* === VARIABLES & RESET === */
+        :root {
+            --primary: #d32f2f;
+            --secondary: #1976d2;
+            --bg-light: #f4f7f6;
+            --text-dark: #333;
+            --text-light: #fff;
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; }
+        h1, h2, h3 { color: var(--primary); }
+        a { text-decoration: none; color: inherit; }
+        .container { width: 90%; max-width: 1200px; margin: auto; padding: 60px 0; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 40px; position: relative; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--secondary); margin: 10px auto; }
+        .btn { display: inline-block; padding: 12px 25px; background: var(--primary); color: #fff; border-radius: 5px; font-weight: 600; cursor: pointer; transition: var(--transition); border: none; }
+        .btn:hover { background: #b71c1c; transform: translateY(-3px); }
+
+        /* === NAVBAR === */
+        header { background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; }
+        nav .logo { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+        nav ul { list-style: none; display: flex; gap: 20px; }
+        nav ul li a { font-weight: 600; transition: var(--transition); }
+        nav ul li a:hover { color: var(--primary); }
+
+        /* === HERO SECTION === */
+        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1555126634-323283e090fa?auto=format&fit=crop&w=1200&q=80') center/cover; height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--text-light); padding: 0 20px; }
+        .hero h1 { font-size: 4rem; color: #fff; margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; }
+
+        /* === STATISTIQUES === */
+        .stats { background: var(--primary); color: #fff; padding: 40px 0; text-align: center; }
+        .stats-grid { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+        .stat-item h3 { font-size: 2.5rem; color: #fff; }
+        .stat-item p { font-size: 1.1rem; }
+
+        /* === ACTIVITÉS & ACTUALITÉS === */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: var(--transition); }
+        .card:hover { transform: translateY(-10px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-content { padding: 20px; text-align: center; }
+
+        /* === PRIX BAS === */
+        .pricing-card { background: #fff; padding: 30px; border-radius: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .pricing-card h3 { font-size: 1.5rem; }
+        .price { font-size: 2.5rem; color: var(--secondary); font-weight: bold; margin: 20px 0; }
+        .price span { font-size: 1rem; color: #777; }
+        .pricing-card ul { list-style: none; margin-bottom: 20px; }
+        .pricing-card ul li { margin-bottom: 10px; }
+
+        /* === AVIS & RATING === */
+        .reviews-section { background: #e9ecef; }
+        .review-card { background: #fff; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; gap: 15px; }
+        .review-card img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+        .stars { color: #f1c40f; margin-bottom: 10px; }
+        .add-review { background: #fff; padding: 30px; border-radius: 10px; margin-top: 40px; }
+
+        /* === FAQ === */
+        .faq-item { background: #fff; margin-bottom: 10px; border-radius: 5px; overflow: hidden; }
+        .faq-question { padding: 15px 20px; background: var(--secondary); color: #fff; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; }
+        .faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: #fff; }
+
+        /* === FORMULAIRES === */
+        .form-group { margin-bottom: 15px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-family: inherit; }
+        
+        /* === SOCIAL MEDIA === */
+        .social-links { text-align: center; margin: 30px 0; }
+        .social-links a { display: inline-block; margin: 0 10px; font-size: 2rem; transition: var(--transition); }
+        .social-links a.whatsapp { color: #25D366; }
+        .social-links a.instagram { color: #E1306C; }
+        .social-links a.tiktok { color: #000000; }
+        .social-links a:hover { transform: scale(1.2); }
+
+        /* === CHATBOT LLM UI === */
+        .chatbot-btn { position: fixed; bottom: 20px; right: 20px; background: var(--secondary); color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 9999; }
+        .chatbot-window { position: fixed; bottom: 90px; right: 20px; width: 350px; height: 450px; background: #fff; border-radius: 10px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 9999; overflow: hidden; border: 1px solid #ddd; }
+        .chatbot-header { background: var(--secondary); color: #fff; padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+        .chatbot-body { flex: 1; padding: 15px; overflow-y: auto; background: #f9f9f9; display: flex; flex-direction: column; gap: 10px; }
+        .chat-msg { max-width: 80%; padding: 10px 15px; border-radius: 15px; font-size: 0.9rem; }
+        .chat-bot { background: #e0e0e0; align-self: flex-start; border-bottom-left-radius: 0; }
+        .chat-user { background: var(--secondary); color: #fff; align-self: flex-end; border-bottom-right-radius: 0; }
+        .chatbot-footer { display: flex; padding: 10px; border-top: 1px solid #ddd; background: #fff; }
+        .chatbot-footer input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-right: 10px; }
+
+        /* === FOOTER === */
+        footer { background: #222; color: #fff; text-align: center; padding: 20px 0; }
     </style>
 </head>
-<body class="transition-all duration-500">
+<body>
 
-    <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-[1000]">
-        <div class="glass rounded-full px-8 py-4 flex justify-between items-center shadow-2xl">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="triggerSecret()">
-                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-bold">DA</div>
-                <span class="text-lg font-bold space-font tracking-tighter">DARIJA ACADEMY</span>
-            </div>
-            <div class="hidden md:flex space-x-8 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">
-                <a href="#actualites" class="hover:text-blue-400 transition">Actualités</a>
-                <a href="#activites" class="hover:text-blue-400 transition">Culture</a>
-                <a href="#tarifs" class="hover:text-blue-400 transition">Tarifs</a>
-            </div>
-            <a href="#inscription" class="bg-white text-black px-6 py-2 rounded-full text-xs font-black hover:scale-105 transition">S'INSCRIRE</a>
+    <header>
+        <nav>
+            <div class="logo">Darija Academy</div>
+            <ul>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#activites">Activités</a></li>
+                <li><a href="#actualites">Actualités</a></li>
+                <li><a href="#prix">Tarifs</a></li>
+                <li><a href="#avis">Avis</a></li>
+                <li><a href="#inscription" class="btn" style="padding: 5px 15px; color:#fff;">S'inscrire</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="accueil" class="hero">
+        <div>
+            <h1>Maîtrisez la Darija avec les Meilleurs</h1>
+            <p>Rejoignez la plus grande communauté d'apprentissage du dialecte marocain.</p>
+            <a href="#inscription" class="btn">Commencer maintenant</a>
         </div>
-    </nav>
-
-    <section class="pt-48 pb-20 px-6 text-center">
-        <h1 class="text-7xl md:text-9xl font-black space-font tracking-tighter mb-6" data-aos="zoom-out">
-            MAROC <span class="text-blue-600 italic">DIGITAL.</span>
-        </h1>
-        <p class="text-gray-400 max-w-xl mx-auto text-lg font-light">L'académie premium où la tradition marocaine rencontre l'innovation technologique.</p>
     </section>
 
-    <section id="actualites" class="py-24 px-6 max-w-7xl mx-auto">
-        <h2 class="text-3xl font-bold space-font mb-12">NEWS <span class="text-blue-500">& EVENTS</span></h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="md:col-span-2 glass rounded-[2.5rem] overflow-hidden group relative h-[400px]">
-                <img src="https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&w=1200" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition duration-700">
-                <div class="relative p-10 h-full flex flex-col justify-end">
-                    <span class="bg-blue-600 w-fit px-4 py-1 rounded-full text-[10px] font-bold mb-4">DERNIÈRE MINUTE</span>
-                    <h3 class="text-4xl font-black mb-2">Expédition Chefchaouen 2026</h3>
-                    <p class="text-gray-300">Inscriptions ouvertes pour le voyage d'immersion culturelle. Places limitées.</p>
-                </div>
+    <section class="stats">
+        <div class="container stats-grid">
+            <div class="stat-item">
+                <h3 id="stat1">0+</h3>
+                <p>Étudiants formés</p>
             </div>
-            <div class="glass rounded-[2.5rem] p-8 flex flex-col justify-center border-emerald-500/20">
-                <div class="text-emerald-500 text-4xl mb-4"><i class="fas fa-users-cog"></i></div>
-                <h3 class="text-xl font-bold mb-2">Recrutement Tuteurs</h3>
-                <p class="text-gray-400 text-sm">Nous recherchons des natifs passionnés pour nos classes virtuelles. Postulez maintenant.</p>
+            <div class="stat-item">
+                <h3 id="stat2">0</h3>
+                <p>Formateurs Experts</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="stat3">0%</h3>
+                <p>Taux de satisfaction</p>
             </div>
         </div>
     </section>
 
-    <section id="activites" class="py-24 px-6 bg-white/[0.01]">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold space-font mb-12 text-right">IMMERSION <span class="text-blue-500">CULTURELLE</span></h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="group relative rounded-3xl overflow-hidden h-64">
-                    <img src="https://images.unsplash.com/photo-1590603740183-980e7f98e051?auto=format&fit=crop&w=500" class="w-full h-full object-cover group-hover:scale-110 transition">
-                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">Atelier Thé</div>
+    <section id="activites" class="container">
+        <h2 class="section-title">Nos Activités</h2>
+        <div class="grid-3">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80" alt="Cours en ligne">
+                <div class="card-content">
+                    <h3>Cours Interactifs en Ligne</h3>
+                    <p>Apprenez à votre rythme avec nos vidéos, audios et quiz quotidiens adaptés à tous les niveaux.</p>
                 </div>
-                <div class="group relative rounded-3xl overflow-hidden h-64">
-                    <img src="https://images.unsplash.com/photo-1539667468225-eebb663053e6?auto=format&fit=crop&w=500" class="w-full h-full object-cover group-hover:scale-110 transition">
-                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">Calligraphie</div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=600&q=80" alt="Atelier de conversation">
+                <div class="card-content">
+                    <h3>Clubs de Conversation</h3>
+                    <p>Pratiquez la Darija en temps réel avec des locuteurs natifs via nos sessions Zoom hebdomadaires.</p>
                 </div>
-                <div class="group relative rounded-3xl overflow-hidden h-64">
-                    <img src="https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?auto=format&fit=crop&w=500" class="w-full h-full object-cover group-hover:scale-110 transition">
-                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">Artisanat Zellige</div>
-                </div>
-                <div class="group relative rounded-3xl overflow-hidden h-64">
-                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=500" class="w-full h-full object-cover group-hover:scale-110 transition">
-                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">Sessions Gnaoua</div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=600&q=80" alt="Immersion culturelle">
+                <div class="card-content">
+                    <h3>Immersion Culturelle</h3>
+                    <p>Découvrez la culture, la cuisine et les traditions marocaines à travers nos événements spéciaux.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="tarifs" class="py-24 px-6">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
-            <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-blue-500/30 transition">
-                <h4 class="text-gray-500 font-bold text-xs uppercase mb-4 tracking-widest">Pack Boussa</h4>
-                <div class="text-5xl font-black space-font mb-6">149 DH</div>
-                <ul class="text-sm space-y-4 text-gray-400 mb-8">
-                    <li>Cours Vidéos HD</li>
-                    <li>Quiz de niveau</li>
+    <section id="actualites" class="container">
+        <h2 class="section-title">Actualités de l'Académie</h2>
+        <div class="grid-3">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" alt="Ouverture des inscriptions">
+                <div class="card-content">
+                    <h3>Ouverture des Inscriptions : Session Automne</h3>
+                    <p>Les places sont limitées ! Rejoignez la nouvelle promotion et bénéficiez de -20% sur les tarifs.</p>
+                    <a href="#inscription" class="btn" style="margin-top: 10px;">En savoir plus</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1515161318750-781d6122e367?auto=format&fit=crop&w=600&q=80" alt="Recrutement formateur">
+                <div class="card-content">
+                    <h3>Nous recrutons un nouveau Formateur !</h3>
+                    <p>Darija Academy s'agrandit. Vous êtes passionné par l'enseignement et natif ? Postulez dès maintenant.</p>
+                    <a href="#contact" class="btn" style="margin-top: 10px;">Postuler</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="prix" class="container">
+        <h2 class="section-title">Des Tarifs Accessibles</h2>
+        <div class="grid-3">
+            <div class="pricing-card">
+                <h3>Débutant</h3>
+                <div class="price">99 Dhs <span>/ mois</span></div>
+                <ul>
+                    <li>Accès aux cours vidéos</li>
+                    <li>Support par email</li>
+                    <li>Exercices de base</li>
                 </ul>
+                <button class="btn">Choisir</button>
             </div>
-            <div class="bg-blue-600 p-10 rounded-[3rem] shadow-2xl scale-105 relative overflow-hidden shimmer">
-                <h4 class="text-blue-100 font-bold text-xs uppercase mb-4 tracking-widest">Pack Chabab</h4>
-                <div class="text-5xl font-black space-font mb-6">349 DH</div>
-                <ul class="text-sm space-y-4 text-white mb-8">
-                    <li>Sessions Live Zoom</li>
-                    <li>Groupe WhatsApp VIP</li>
+            <div class="pricing-card" style="border: 2px solid var(--primary); transform: scale(1.05);">
+                <h3>Intermédiaire</h3>
+                <div class="price">199 Dhs <span>/ mois</span></div>
+                <ul>
+                    <li>Tout le pack Débutant</li>
+                    <li>1H de conversation / semaine</li>
+                    <li>Accès groupe WhatsApp privé</li>
                 </ul>
+                <button class="btn">Choisir</button>
             </div>
-            <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-blue-500/30 transition">
-                <h4 class="text-gray-500 font-bold text-xs uppercase mb-4 tracking-widest">Pack Sultan</h4>
-                <div class="text-5xl font-black space-font mb-6">899 DH</div>
-                <ul class="text-sm space-y-4 text-gray-400 mb-8">
-                    <li>Tuteur Privé 1-on-1</li>
-                    <li>Voyages Inclus</li>
+            <div class="pricing-card">
+                <h3>Avancé (Pro)</h3>
+                <div class="price">299 Dhs <span>/ mois</span></div>
+                <ul>
+                    <li>Accès illimité</li>
+                    <li>Coaching privé (2H / semaine)</li>
+                    <li>Certification finale</li>
                 </ul>
+                <button class="btn">Choisir</button>
             </div>
         </div>
     </section>
 
-    <section id="avis" class="py-24 px-6">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 italic uppercase">Témoignages</h2>
-            <div class="grid md:grid-cols-3 gap-6 mb-12" id="avis-grid">
-                <div class="glass p-8 rounded-3xl">
-                    <div class="flex items-center space-x-4 mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/45.jpg" class="w-12 h-12 rounded-full border-2 border-blue-500">
-                        <div><h4 class="font-bold">Sofia B.</h4><p class="text-[10px] text-gray-500">MRE (France)</p></div>
-                    </div>
-                    <p class="text-sm text-gray-400 italic">"Une approche moderne, je recommande !"</p>
-                </div>
-                </div>
-            <div class="max-w-2xl mx-auto glass p-10 rounded-[2.5rem]">
-                <h4 class="text-center font-bold mb-6">LAISSER UN AVIS</h4>
-                <div class="grid gap-4">
-                    <input type="text" id="rev-name" placeholder="Nom" class="bg-white/5 p-4 rounded-xl outline-none border border-white/10 focus:border-blue-500">
-                    <textarea id="rev-msg" placeholder="Votre message..." class="bg-white/5 p-4 rounded-xl h-24 outline-none border border-white/10 focus:border-blue-500"></textarea>
-                    <button onclick="addReview()" class="bg-white text-black py-4 rounded-xl font-bold">PUBLIER</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="inscription" class="py-32 px-6">
-        <div class="max-w-4xl mx-auto glass p-16 rounded-[4rem] border-blue-600/20 relative">
-            <h2 class="text-5xl font-black mb-10 text-center">FINALISER <span class="text-blue-500">L'INSCRIPTION</span></h2>
-            <form id="reg-form" class="grid md:grid-cols-2 gap-6">
-                <input type="text" placeholder="Nom complet" required class="bg-white/5 p-5 rounded-2xl outline-none border border-white/5 focus:border-blue-500">
-                <input type="email" placeholder="Email" required class="bg-white/5 p-5 rounded-2xl outline-none border border-white/5 focus:border-blue-500">
-                <div class="md:col-span-2">
-                    <label class="text-xs font-bold text-gray-500 uppercase mb-3 block tracking-widest">Choisir votre abonnement</label>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <label class="cursor-pointer">
-                            <input type="radio" name="plan" value="Boussa" class="hidden peer" checked>
-                            <div class="p-4 rounded-2xl border border-white/10 peer-checked:border-blue-600 peer-checked:bg-blue-600/10 text-center transition">Boussa (149 DH)</div>
-                        </label>
-                        <label class="cursor-pointer">
-                            <input type="radio" name="plan" value="Chabab" class="hidden peer">
-                            <div class="p-4 rounded-2xl border border-white/10 peer-checked:border-blue-600 peer-checked:bg-blue-600/10 text-center transition">Chabab (349 DH)</div>
-                        </label>
-                        <label class="cursor-pointer">
-                            <input type="radio" name="plan" value="Sultan" class="hidden peer">
-                            <div class="p-4 rounded-2xl border border-white/10 peer-checked:border-blue-600 peer-checked:bg-blue-600/10 text-center transition">Sultan (899 DH)</div>
-                        </label>
+    <section id="avis" class="reviews-section">
+        <div class="container">
+            <h2 class="section-title">Avis de nos Étudiants</h2>
+            
+            <div class="grid-3">
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Avis 1">
+                    <div>
+                        <h4>Sarah M.</h4>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p>"Grâce à Darija Academy, je peux enfin parler avec la famille de mon mari au Maroc. Méthode très efficace !"</p>
                     </div>
                 </div>
-                <button type="submit" class="md:col-span-2 py-6 bg-blue-600 rounded-2xl font-black text-lg hover:bg-blue-500 transition shadow-2xl shadow-blue-500/20">REJOINDRE L'ÉLITE</button>
-            </form>
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avis 2">
+                    <div>
+                        <h4>Jean-Paul D.</h4>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <p>"Les prix sont vraiment bas par rapport à la qualité des cours. Les profs sont géniaux."</p>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Avis 3">
+                    <div>
+                        <h4>Aisha K.</h4>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p>"Le groupe WhatsApp est super actif, ça motive énormément à pratiquer tous les jours."</p>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Avis 4">
+                    <div>
+                        <h4>Lucas T.</h4>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
+                        <p>"Parfait pour mon voyage d'affaires à Casablanca. J'ai pu négocier en Darija !"</p>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="Avis 5">
+                    <div>
+                        <h4>Elena R.</h4>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <p>"L'immersion culturelle fait toute la différence. Je recommande à 100% cette académie."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-review">
+                <h3>Laissez votre avis</h3>
+                <form onsubmit="event.preventDefault(); alert('Merci pour votre avis !');">
+                    <div class="form-group">
+                        <input type="text" placeholder="Votre Nom" required>
+                    </div>
+                    <div class="form-group">
+                        <select style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                            <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
+                            <option value="4">⭐⭐⭐⭐ (Très bien)</option>
+                            <option value="3">⭐⭐⭐ (Bien)</option>
+                            <option value="2">⭐⭐ (Passable)</option>
+                            <option value="1">⭐ (Médiocre)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="4" placeholder="Votre expérience avec nous..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Soumettre mon avis</button>
+                </form>
+            </div>
         </div>
     </section>
 
-    <div class="fixed bottom-6 right-6 z-[2000]">
-        <div id="chat-ui" class="hidden glass w-[350px] h-[500px] rounded-[2.5rem] flex-col shadow-2xl border-white/10 overflow-hidden mb-6">
-            <div class="p-6 bg-blue-600 font-bold flex justify-between items-center">
-                <span>DARIJA AI</span>
-                <button onclick="toggleChat()"><i class="fas fa-times"></i></button>
+    <section class="container">
+        <h2 class="section-title">Questions Fréquentes (FAQ)</h2>
+        <div class="faq-item">
+            <div class="faq-question">Comment se déroulent les cours ? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p style="padding: 15px 0;">Tous nos cours sont hébergés sur notre plateforme. Vous regardez les vidéos, complétez les exercices et participez aux lives hebdomadaires.</p></div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Ai-je besoin de connaissances préalables en arabe ? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p style="padding: 15px 0;">Non, nous avons un niveau pour les grands débutants où nous vous apprenons les bases à partir de zéro, même sans connaître l'alphabet arabe.</p></div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Puis-je annuler mon abonnement à tout moment ? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p style="padding: 15px 0;">Oui, nos offres sont sans engagement. Vous pouvez annuler votre abonnement mensuel d'un simple clic dans votre espace membre.</p></div>
+        </div>
+    </section>
+
+    <section id="inscription" class="container">
+        <div class="grid-3" style="grid-template-columns: 1fr 1fr;">
+            <div style="background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <h2 style="color: var(--primary); margin-bottom: 20px;">Formulaire d'Inscription</h2>
+                <form onsubmit="event.preventDefault(); alert('Inscription réussie, nous vous contacterons vite !');">
+                    <div class="form-group"><input type="text" placeholder="Nom Complet" required></div>
+                    <div class="form-group"><input type="email" placeholder="Email" required></div>
+                    <div class="form-group"><input type="tel" placeholder="Numéro WhatsApp" required></div>
+                    <div class="form-group">
+                        <select style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                            <option>Sélectionnez un Forfait</option>
+                            <option>Débutant (99 Dhs)</option>
+                            <option>Intermédiaire (199 Dhs)</option>
+                            <option>Avancé (299 Dhs)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">M'inscrire maintenant</button>
+                </form>
             </div>
-            <div id="chat-box" class="flex-1 p-6 overflow-y-auto text-xs space-y-4">
-                <div class="bg-white/5 p-3 rounded-2xl rounded-tl-none">Salam ! Je suis votre assistant IA. Comment puis-je vous aider ?</div>
-            </div>
-            <div class="p-4 bg-white/5 border-t border-white/5 flex">
-                <input type="text" id="chat-in" class="bg-transparent flex-1 outline-none text-xs" placeholder="Posez une question...">
-                <button onclick="sendAI()" class="text-blue-500"><i class="fas fa-paper-plane"></i></button>
+
+            <div id="contact" style="background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <h2 style="color: var(--primary); margin-bottom: 20px;">Contactez-nous</h2>
+                <form onsubmit="event.preventDefault(); alert('Message envoyé !');">
+                    <div class="form-group"><input type="text" placeholder="Sujet" required></div>
+                    <div class="form-group"><textarea rows="4" placeholder="Votre message..." required></textarea></div>
+                    <button type="submit" class="btn">Envoyer</button>
+                </form>
+
+                <div class="social-links">
+                    <h3 style="margin-bottom: 15px; font-size: 1.2rem;">Rejoignez-nous sur les réseaux :</h3>
+                    <a href="https://wa.me/212600000000" class="whatsapp" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="instagram" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="tiktok" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
             </div>
         </div>
-        <button onclick="toggleChat()" class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-2xl shadow-2xl animate-bounce"><i class="fas fa-robot"></i></button>
+    </section>
+
+    <div class="chatbot-btn" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></div>
+    
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <span>LLM AI Assistant</span>
+            <i class="fas fa-times" style="cursor: pointer;" onclick="toggleChat()"></i>
+        </div>
+        <div class="chatbot-body" id="chatBody">
+            <div class="chat-msg chat-bot">Salam ! Je suis l'IA de Darija Academy. Comment puis-je vous aider aujourd'hui ? Avez-vous une question sur nos prix ou nos cours ?</div>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" id="chatInput" placeholder="Écrivez votre message..." onkeypress="handleChat(event)">
+            <button class="btn" style="padding: 10px 15px;" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
     </div>
 
-    <footer class="py-20 text-center opacity-40 text-[10px] tracking-[0.5em] font-bold">
-        © 2026 DARIJA ACADEMY | PREMIUM LINGUISTICS
+    <footer>
+        <p>&copy; 2026 Darija Academy. Tous droits réservés.</p>
+        <p style="font-size: 0.8rem; margin-top: 5px;">Développé avec ❤️ pour l'apprentissage de la Darija.</p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        AOS.init();
-        let clicks = 0;
-        function triggerSecret() { clicks++; if(clicks === 5) { document.body.classList.toggle('cyber-mode'); alert("SYSTÈME PASSE EN MODE CYBER-DARIJA."); } }
+        // Animation des Statistiques (Compteur)
+        const animateValue = (id, start, end, duration) => {
+            let obj = document.getElementById(id);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start) + (id === 'stat1' ? '+' : (id === 'stat3' ? '%' : ''));
+                if (progress < 1) { window.requestAnimationFrame(step); }
+            };
+            window.requestAnimationFrame(step);
+        };
         
-        function toggleChat() { const ui = document.getElementById('chat-ui'); ui.style.display = ui.style.display === 'flex' ? 'none' : 'flex'; }
-        
-        function sendAI() {
-            const cin = document.getElementById('chat-in');
-            const box = document.getElementById('chat-box');
-            if(!cin.value) return;
-            box.innerHTML += `<div class="bg-blue-600/20 p-3 rounded-2xl rounded-tr-none ml-auto text-right italic font-bold">"${cin.value}"</div>`;
-            const q = cin.value.toLowerCase(); cin.value = "";
+        // Lancer l'animation au chargement
+        window.onload = () => {
+            animateValue("stat1", 0, 1500, 2000);
+            animateValue("stat2", 0, 25, 2000);
+            animateValue("stat3", 0, 98, 2000);
+        };
+
+        // Gestion du FAQ (Accordion)
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                    icon.className = "fas fa-chevron-down";
+                } else {
+                    document.querySelectorAll('.faq-answer').forEach(ans => ans.style.maxHeight = null);
+                    document.querySelectorAll('.faq-question i').forEach(i => i.className = "fas fa-chevron-down");
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                    icon.className = "fas fa-chevron-up";
+                }
+            });
+        });
+
+        // Gestion du Chatbot LLM
+        function toggleChat() {
+            const chatWin = document.getElementById('chatbotWindow');
+            chatWin.style.display = chatWin.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function handleChat(event) {
+            if (event.key === 'Enter') { sendMessage(); }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (message === '') return;
+
+            const chatBody = document.getElementById('chatBody');
+            
+            // Message Utilisateur
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-msg chat-user';
+            userMsg.innerText = message;
+            chatBody.appendChild(userMsg);
+            
+            input.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // Simulation Réponse LLM (Bot) avec un délai
             setTimeout(() => {
-                let r = "Je suis un LLM en cours d'apprentissage. Pour les tarifs, consultez la section dédiée !";
-                if(q.includes("prix")) r = "Le pack Chabab à 349 DH est notre meilleur rapport qualité/prix.";
-                if(q.includes("voyage")) r = "Le prochain voyage à Chefchaouen est prévu pour Mai 2026.";
-                box.innerHTML += `<div class="bg-white/10 p-3 rounded-2xl rounded-tl-none animate-pulse">${r}</div>`;
-                box.scrollTop = box.scrollHeight;
+                const botMsg = document.createElement('div');
+                botMsg.className = 'chat-msg chat-bot';
+                
+                // Réponses simulées basées sur des mots-clés
+                let reply = "Je suis une IA de démonstration. Pour plus de détails, contactez-nous via WhatsApp !";
+                if(message.toLowerCase().includes("prix") || message.toLowerCase().includes("tarif")) {
+                    reply = "Nos prix commencent à partir de 99 Dhs/mois pour le pack Débutant. Jetez un œil à la section Tarifs !";
+                } else if(message.toLowerCase().includes("inscription") || message.toLowerCase().includes("inscrire")) {
+                    reply = "Super ! Vous pouvez utiliser le formulaire d'inscription sur cette page pour commencer.";
+                } else if(message.toLowerCase().includes("salam") || message.toLowerCase().includes("bonjour")) {
+                    reply = "Wa alaikum salam ! Prêt à apprendre la Darija ?";
+                }
+
+                botMsg.innerText = reply;
+                chatBody.appendChild(botMsg);
+                chatBody.scrollTop = chatBody.scrollHeight;
             }, 1000);
-        }
-
-        function addReview() {
-            const n = document.getElementById('rev-name').value;
-            const m = document.getElementById('rev-msg').value;
-            if(!n || !m) return;
-            const wall = document.getElementById('avis-grid');
-            wall.insertAdjacentHTML('afterbegin', `<div class="glass p-8 rounded-3xl border-blue-500 border animate-bounce"><div class="flex items-center space-x-4 mb-4"><img src="https://i.pravatar.cc/150?u=${n}" class="w-12 h-12 rounded-full"><div><h4 class="font-bold">${n}</h4></div></div><p class="text-sm italic">"${m}"</p></div>`);
-        }
-
-        document.getElementById('reg-form').onsubmit = (e) => {
-            e.preventDefault();
-            const plan = document.querySelector('input[name="plan"]:checked').value;
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            alert(`Mabrouk ! Inscription enregistrée pour le pack ${plan}. Un conseiller vous contactera !`);
-            e.target.reset();
         }
     </script>
 </body>
