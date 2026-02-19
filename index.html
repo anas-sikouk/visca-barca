@@ -3,231 +3,379 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darija Academy | Immersion 2.0</title>
+    <title>Darija Academy | Elite Experience</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Fira+Code:wght@400;700&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; color: #f8fafc; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .matrix-mode { font-family: 'Fira Code', monospace !important; filter: sepia(1) saturate(5) hue-rotate(90deg); }
-        .avatar-frame { position: relative; padding: 3px; background: linear-gradient(to right, #3b82f6, #8b5cf6); border-radius: 50%; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap');
+        
+        :root {
+            --bg: #050505;
+            --card: rgba(20, 20, 20, 0.6);
+            --primary: #3e81f6;
+            --accent: #c084fc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .space-font { font-family: 'Space Grotesk', sans-serif; }
+
+        /* Effet Shimmer pour les boutons */
+        .shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer::after {
+            content: "";
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer { 0% { transform: translateX(-100%) rotate(45deg); } 100% { transform: translateX(100%) rotate(45deg); } }
+
+        /* Verre dépoli Premium */
+        .glass-card {
+            background: var(--card);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .glass-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(62, 129, 246, 0.15);
+        }
+
+        /* Easter Egg Matrix Terminal */
+        .cyber-mode {
+            filter: contrast(1.2) brightness(1.1);
+            font-family: 'Courier New', monospace !important;
+        }
+        .cyber-mode .glass-card {
+            border-color: #00ff41 !important;
+            box-shadow: 0 0 15px #00ff4133 !important;
+            background: rgba(0, 20, 0, 0.9) !important;
+        }
+
+        /* Animation Chat */
+        #chat-ui { display: none; animation: slideUp 0.4s ease-out; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
-<body class="transition-all duration-500">
+<body>
 
-    <nav class="fixed w-full z-50 px-6 py-4">
-        <div class="max-w-7xl mx-auto glass rounded-3xl px-8 py-4 flex justify-between items-center border-white/5">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="devEasterEgg()">
-                <div id="logo" class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-blue-500/40">DA</div>
-                <span class="text-xl font-black tracking-tighter">DARIJA ACADEMY</span>
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl z-[1000]">
+        <div class="glass-card rounded-[2rem] px-8 py-4 flex justify-between items-center shadow-2xl">
+            <div class="flex items-center space-x-3 cursor-pointer group" onclick="triggerEasterEgg()">
+                <div id="logo-icon" class="w-10 h-10 bg-gradient-to-tr from-blue-600 to-indigo-500 rounded-xl flex items-center justify-center text-white font-bold transition-transform group-hover:rotate-12">DA</div>
+                <span class="text-lg font-bold tracking-tighter space-font uppercase">Darija <span class="text-blue-500">Academy</span></span>
             </div>
-            <div class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-gray-400">
-                <a href="#tarifs" class="hover:text-blue-400">Tarifs</a>
-                <a href="#avis" class="hover:text-blue-400">Avis</a>
-                <a href="#news" class="hover:text-blue-400">News</a>
+            <div class="hidden md:flex space-x-8 text-[11px] font-bold uppercase tracking-widest text-gray-400">
+                <a href="#news" class="hover:text-white transition">Actualités</a>
+                <a href="#tarifs" class="hover:text-white transition">Tarifs</a>
+                <a href="#avis" class="hover:text-white transition">Communauté</a>
             </div>
-            <a href="#inscription" class="bg-white text-black px-6 py-2 rounded-full text-xs font-black hover:scale-105 transition">S'INSCRIRE</a>
+            <a href="#inscription" class="shimmer bg-white text-black px-6 py-2 rounded-full text-xs font-extrabold hover:scale-105 transition active:scale-95">JOIN NOW</a>
         </div>
     </nav>
 
-    <header class="pt-52 pb-20 text-center px-6">
-        <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tighter">Vivre le Maroc.<br><span class="text-blue-500 italic">Parler Darija.</span></h1>
-        <p class="text-gray-500 max-w-xl mx-auto text-lg mb-12">Apprenez la langue du cœur avec une méthode moderne, interactive et fun.</p>
-    </header>
+    <section class="relative min-h-screen flex flex-col justify-center items-center px-6 overflow-hidden">
+        <div class="absolute w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full -top-20 -left-20"></div>
+        <div class="absolute w-[400px] h-[400px] bg-purple-600/10 blur-[150px] rounded-full bottom-0 right-0"></div>
 
-    <section id="news" class="py-20 px-6 bg-white/5">
+        <div class="relative z-10 text-center" data-aos="fade-up">
+            <span class="px-4 py-1 rounded-full border border-blue-500/30 text-blue-400 text-[10px] font-black tracking-[0.3em] uppercase mb-8 inline-block">Apprentissage Nouvelle Génération</span>
+            <h1 class="text-7xl md:text-[110px] font-black space-font leading-none tracking-tighter mb-8">
+                L'ÉLITE DE LA <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 italic">DARIJA.</span>
+            </h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg md:text-xl font-light leading-relaxed mb-12">
+                Oubliez les méthodes scolaires. Apprenez le marocain réel à travers une expérience technologique immersive.
+            </p>
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 justify-center">
+                <a href="#inscription" class="px-10 py-5 bg-blue-600 rounded-2xl font-black text-sm hover:bg-blue-500 transition shadow-2xl shadow-blue-500/30 uppercase tracking-widest">Commencer l'aventure</a>
+                <a href="#avis" class="px-10 py-5 glass-card rounded-2xl font-black text-sm hover:bg-white/5 transition uppercase tracking-widest">Voir les avis</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="news" class="py-24 px-6">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-black mb-12 italic">DERNIÈRES <span class="text-blue-500">INFOS</span></h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass p-6 rounded-[2.5rem] border-blue-500/20">
-                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=500" class="rounded-2xl mb-6 h-48 w-full object-cover">
-                    <span class="bg-blue-600 px-3 py-1 rounded-full text-[10px] font-bold">INSCRIPTIONS</span>
-                    <h3 class="text-xl font-bold mt-4">Session Printemps 2026</h3>
-                    <p class="text-gray-400 text-sm mt-2">Ouverture des classes de niveau A1 et A2 dès lundi prochain.</p>
+            <h2 class="text-4xl font-bold space-font mb-12">ACTUALITÉS <span class="text-blue-500">/ 01</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 h-auto md:h-[600px]">
+                <div class="md:col-span-2 md:row-span-2 glass-card rounded-[2.5rem] p-10 flex flex-col justify-end relative overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1539667468225-eebb663053e6?auto=format&fit=crop&w=1000" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition duration-700">
+                    <div class="relative z-10">
+                        <span class="bg-blue-600 px-3 py-1 rounded-full text-[10px] font-bold mb-4 inline-block">IMMERSION 2026</span>
+                        <h3 class="text-3xl font-black mb-4">Expédition Chefchaouen</h3>
+                        <p class="text-gray-300">Un séjour linguistique exclusif pour nos membres Sultan dans la perle du Nord.</p>
+                    </div>
                 </div>
-                <div class="glass p-6 rounded-[2.5rem] border-purple-500/20">
-                    <img src="https://images.unsplash.com/photo-1539667468225-eebb663053e6?auto=format&fit=crop&w=500" class="rounded-2xl mb-6 h-48 w-full object-cover">
-                    <span class="bg-purple-600 px-3 py-1 rounded-full text-[10px] font-bold">VOYAGE</span>
-                    <h3 class="text-xl font-bold mt-4">Destination Chefchaouen</h3>
-                    <p class="text-gray-400 text-sm mt-2">Voyage d'immersion culturelle pour pratiquer la Darija avec les locaux.</p>
+                <div class="md:col-span-2 glass-card rounded-[2.5rem] p-8 flex items-center space-x-6 hover:bg-white/5 transition">
+                    <div class="w-20 h-20 bg-blue-500/20 rounded-2xl flex items-center justify-center text-3xl"><i class="fas fa-briefcase text-blue-400"></i></div>
+                    <div>
+                        <h3 class="text-xl font-bold">On Recrute !</h3>
+                        <p class="text-gray-400 text-sm">Nous cherchons 2 formateurs passionnés pour rejoindre l'équipe.</p>
+                    </div>
                 </div>
-                <div class="glass p-6 rounded-[2.5rem] border-emerald-500/20">
-                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=500" class="rounded-2xl mb-6 h-48 w-full object-cover">
-                    <span class="bg-emerald-600 px-3 py-1 rounded-full text-[10px] font-bold">EMPLOI</span>
-                    <h3 class="text-xl font-bold mt-4">On recrute un formateur !</h3>
-                    <p class="text-gray-400 text-sm mt-2">Vous maîtrisez les bases de la Darija ? Rejoignez notre équipe pédagogique.</p>
+                <div class="md:col-span-2 glass-card rounded-[2.5rem] p-8 flex items-center space-x-6 hover:bg-white/5 transition">
+                    <div class="w-20 h-20 bg-purple-500/20 rounded-2xl flex items-center justify-center text-3xl"><i class="fas fa-calendar-alt text-purple-400"></i></div>
+                    <div>
+                        <h3 class="text-xl font-bold">Session de Printemps</h3>
+                        <p class="text-gray-400 text-sm">Les inscriptions ferment dans 4 jours. Rejoignez les 500 nouveaux élèves.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="tarifs" class="py-24 px-6 text-center">
-        <h2 class="text-4xl font-black mb-16 uppercase">Abonnements</h2>
-        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div class="glass p-10 rounded-[3rem] border-white/5">
-                <h4 class="font-bold text-gray-400 mb-2">PACK BOUSSA</h4>
-                <div class="text-5xl font-black mb-6">149 DH</div>
-                <ul class="text-sm space-y-3 text-gray-500 mb-8">
-                    <li>Accès Plateforme 24/7</li>
-                    <li>Supports PDF inclus</li>
-                    <li>Quiz Hebdomadaires</li>
-                </ul>
-                <a href="#inscription" class="block py-4 border border-white/10 rounded-2xl font-bold hover:bg-white/5">Choisir</a>
+    <section id="tarifs" class="py-24 px-6 bg-white/[0.02]">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl font-bold space-font mb-4 italic uppercase">Investissez en vous</h2>
+                <p class="text-gray-500">Choisissez le pack adapté à votre ambition.</p>
             </div>
-            <div class="bg-blue-600 p-10 rounded-[3rem] shadow-2xl shadow-blue-500/20 scale-105">
-                <h4 class="font-bold text-blue-100 mb-2">PACK CHABAB</h4>
-                <div class="text-5xl font-black mb-6">349 DH</div>
-                <ul class="text-sm space-y-3 text-blue-100 mb-8">
-                    <li>Tout du pack Boussa</li>
-                    <li>2 Sessions Live / semaine</li>
-                    <li>Groupe WhatsApp VIP</li>
-                </ul>
-                <a href="#inscription" class="block py-4 bg-white text-blue-600 rounded-2xl font-black shadow-lg">PLUS POPULAIRE</a>
-            </div>
-            <div class="glass p-10 rounded-[3rem] border-white/5">
-                <h4 class="font-bold text-gray-400 mb-2">PACK SULTAN</h4>
-                <div class="text-5xl font-black mb-6">899 DH</div>
-                <ul class="text-sm space-y-3 text-gray-500 mb-8">
-                    <li>Coaching Privé 1-on-1</li>
-                    <li>Voyages Prioritaires</li>
-                    <li>Certificat de Maîtrise</li>
-                </ul>
-                <a href="#inscription" class="block py-4 border border-white/10 rounded-2xl font-bold hover:bg-white/5">Choisir</a>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-10 rounded-[3rem] flex flex-col group">
+                    <h4 class="text-gray-500 font-bold text-xs uppercase mb-8">Base</h4>
+                    <div class="text-5xl font-black space-font mb-4">149 DH<span class="text-sm font-light text-gray-500">/mois</span></div>
+                    <ul class="text-sm space-y-4 text-gray-400 mb-12 flex-1 border-t border-white/5 pt-8">
+                        <li><i class="fas fa-check text-blue-500 mr-2"></i> Accès à 150+ Vidéos</li>
+                        <li><i class="fas fa-check text-blue-500 mr-2"></i> Quiz Interactifs</li>
+                    </ul>
+                    <a href="#inscription" class="w-full py-4 text-center glass-card rounded-2xl font-bold group-hover:bg-white group-hover:text-black transition">Choisir</a>
+                </div>
+                <div class="glass-card p-10 rounded-[3rem] flex flex-col border-blue-500/50 bg-blue-600/5 relative scale-105 z-10">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 px-4 py-1 rounded-full text-[10px] font-black">LE PLUS PRISÉ</div>
+                    <h4 class="text-blue-400 font-bold text-xs uppercase mb-8">Chabab (Pro)</h4>
+                    <div class="text-5xl font-black space-font mb-4">349 DH<span class="text-sm font-light text-gray-500">/mois</span></div>
+                    <ul class="text-sm space-y-4 text-gray-200 mb-12 flex-1 border-t border-white/10 pt-8">
+                        <li><i class="fas fa-star text-blue-400 mr-2"></i> Tout du pack Base</li>
+                        <li><i class="fas fa-star text-blue-400 mr-2"></i> 2 Sessions Live / semaine</li>
+                        <li><i class="fas fa-star text-blue-400 mr-2"></i> Coaching par WhatsApp</li>
+                    </ul>
+                    <a href="#inscription" class="w-full py-4 text-center bg-blue-600 rounded-2xl font-black shadow-xl shadow-blue-500/40 hover:scale-105 transition">Démarrer Maintenant</a>
+                </div>
+                <div class="glass-card p-10 rounded-[3rem] flex flex-col group">
+                    <h4 class="text-gray-500 font-bold text-xs uppercase mb-8">Sultan (VIP)</h4>
+                    <div class="text-5xl font-black space-font mb-4">899 DH<span class="text-sm font-light text-gray-500">/mois</span></div>
+                    <ul class="text-sm space-y-4 text-gray-400 mb-12 flex-1 border-t border-white/5 pt-8">
+                        <li><i class="fas fa-crown text-purple-500 mr-2"></i> Tuteur Privé 1-to-1</li>
+                        <li><i class="fas fa-crown text-purple-500 mr-2"></i> Immersion Culturelle</li>
+                        <li><i class="fas fa-crown text-purple-500 mr-2"></i> Voyages Inclus</li>
+                    </ul>
+                    <a href="#inscription" class="w-full py-4 text-center glass-card rounded-2xl font-bold group-hover:bg-white group-hover:text-black transition">Choisir</a>
+                </div>
             </div>
         </div>
     </section>
 
     <section id="avis" class="py-24 px-6">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-black mb-16 text-center uppercase tracking-widest">Ils parlent de <span class="text-blue-500 italic">nous</span></h2>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20" id="avis-list">
-                <div class="glass p-8 rounded-[2.5rem]" data-aos="fade-up">
+            <h2 class="text-3xl font-bold space-font mb-16 uppercase italic">Ce qu'ils <span class="text-blue-500">ressentent</span></h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20" id="avis-grid">
+                <div class="glass-card p-8 rounded-[2.5rem]" data-aos="fade-up">
                     <div class="flex items-center space-x-4 mb-6">
-                        <div class="avatar-frame"><img src="https://randomuser.me/api/portraits/women/65.jpg" class="w-14 h-14 rounded-full border-2 border-black"></div>
-                        <div><h4 class="font-bold">Marie Durand</h4><p class="text-[10px] text-gray-500 font-bold uppercase">Expatriée (Rabat)</p></div>
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-14 h-14 rounded-full border-2 border-blue-600 p-1">
+                        <div><h4 class="font-bold">Laila Benali</h4><p class="text-[9px] text-gray-500 font-black uppercase">Expatriée (Dubai)</p></div>
                     </div>
-                    <p class="text-gray-400 text-sm italic">"Enfin une méthode qui ne se focalise pas sur l'arabe classique mais sur ce qu'on entend vraiment dans la rue !"</p>
+                    <p class="text-gray-400 text-sm italic leading-relaxed">"Enfin une plateforme qui respecte l'intelligence de l'élève. On apprend la Darija d'aujourd'hui, pas celle des livres."</p>
                 </div>
-                <div class="glass p-8 rounded-[2.5rem]" data-aos="fade-up" data-aos-delay="100">
+                <div class="glass-card p-8 rounded-[2.5rem]" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex items-center space-x-4 mb-6">
-                        <div class="avatar-frame"><img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-14 h-14 rounded-full border-2 border-black"></div>
-                        <div><h4 class="font-bold">Yassine Amrani</h4><p class="text-[10px] text-gray-500 font-bold uppercase">MRE (Canada)</p></div>
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-14 h-14 rounded-full border-2 border-white/10 p-1">
+                        <div><h4 class="font-bold">Julian Rossi</h4><p class="text-[9px] text-gray-500 font-black uppercase">Chercheur (Italie)</p></div>
                     </div>
-                    <p class="text-gray-400 text-sm italic">"Reconnecter avec mon pays d'origine était essentiel. L'académie m'a donné les bases en 2 mois."</p>
+                    <p class="text-gray-400 text-sm italic leading-relaxed">"The interactive quizzes and the chatbot are life-changing for daily practice. Best investment this year."</p>
                 </div>
-                <div class="glass p-8 rounded-[2.5rem]" data-aos="fade-up" data-aos-delay="200">
+                <div class="glass-card p-8 rounded-[2.5rem]" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex items-center space-x-4 mb-6">
-                        <div class="avatar-frame"><img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-14 h-14 rounded-full border-2 border-black"></div>
-                        <div><h4 class="font-bold">Sarah Williams</h4><p class="text-[10px] text-gray-500 font-bold uppercase">Journaliste</p></div>
+                        <img src="https://randomuser.me/api/portraits/women/22.jpg" class="w-14 h-14 rounded-full border-2 border-white/10 p-1">
+                        <div><h4 class="font-bold">Sonia K.</h4><p class="text-[9px] text-gray-500 font-black uppercase">MRE (Montréal)</p></div>
                     </div>
-                    <p class="text-gray-400 text-sm italic">"The instructors are very professional. The sultan pack changed my stay in Morocco completely."</p>
+                    <p class="text-gray-400 text-sm italic leading-relaxed">"Ma famille au Maroc est impressionnée par mon accent. Merci Darija Academy pour ce coaching !"</p>
                 </div>
-                <div class="glass p-8 rounded-[2.5rem]" data-aos="fade-up">
+                <div class="glass-card p-8 rounded-[2.5rem]" data-aos="fade-up">
                     <div class="flex items-center space-x-4 mb-6">
-                        <div class="avatar-frame"><img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-14 h-14 rounded-full border-2 border-black"></div>
-                        <div><h4 class="font-bold">Jean-Pierre</h4><p class="text-[10px] text-gray-500 font-bold uppercase">Retraité (Agadir)</p></div>
+                        <img src="https://randomuser.me/api/portraits/men/67.jpg" class="w-14 h-14 rounded-full border-2 border-white/10 p-1">
+                        <div><h4 class="font-bold">Marc Lefèvre</h4><p class="text-[9px] text-gray-500 font-black uppercase">Directeur Artistique</p></div>
                     </div>
-                    <p class="text-gray-400 text-sm italic">"Les sorties culturelles sont géniales. Apprendre en s'amusant, c'est ce qu'il me fallait."</p>
+                    <p class="text-gray-400 text-sm italic leading-relaxed">"Design incroyable, expérience utilisateur fluide et tuteurs de haut niveau. Rien à dire."</p>
                 </div>
-                <div class="glass p-8 rounded-[2.5rem]" data-aos="fade-up" data-aos-delay="100">
+                <div class="glass-card p-8 rounded-[2.5rem]" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex items-center space-x-4 mb-6">
-                        <div class="avatar-frame"><img src="https://randomuser.me/api/portraits/women/22.jpg" class="w-14 h-14 rounded-full border-2 border-black"></div>
-                        <div><h4 class="font-bold">Elena Rossi</h4><p class="text-[10px] text-gray-500 font-bold uppercase">Étudiante</p></div>
+                        <img src="https://randomuser.me/api/portraits/women/12.jpg" class="w-14 h-14 rounded-full border-2 border-white/10 p-1">
+                        <div><h4 class="font-bold">Emma Watson</h4><p class="text-[9px] text-gray-500 font-black uppercase">Étudiante</p></div>
                     </div>
-                    <p class="text-gray-400 text-sm italic">"Une équipe à l'écoute et des cours structurés. Je recommande à 100% pour tous les niveaux."</p>
+                    <p class="text-gray-400 text-sm italic leading-relaxed">"Le séjour d'immersion à Chefchaouen a été le déclic. Je parle enfin sans peur !"</p>
                 </div>
             </div>
 
-            <div class="max-w-2xl mx-auto glass p-10 rounded-[3rem] border-white/10 shadow-2xl">
-                <h4 class="text-2xl font-black mb-8 text-center italic">VOTRE <span class="text-blue-500">EXPÉRIENCE</span></h4>
-                <div class="space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="text" id="input-name" placeholder="Nom Complet" class="bg-white/5 p-4 rounded-2xl outline-none focus:border-blue-500 border border-transparent transition">
-                        <input type="text" id="input-role" placeholder="Qui êtes-vous ?" class="bg-white/5 p-4 rounded-2xl outline-none focus:border-blue-500 border border-transparent transition">
+            <div class="max-w-3xl mx-auto glass-card p-12 rounded-[3.5rem] border-white/5 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 blur-3xl"></div>
+                <h4 class="text-2xl font-black mb-10 text-center space-font italic">AJOUTER VOTRE <span class="text-blue-500">VOIX</span></h4>
+                <div class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <input type="text" id="name-in" placeholder="Nom Complet" class="bg-white/5 p-5 rounded-2xl border border-white/5 outline-none focus:border-blue-500 transition">
+                        <input type="text" id="role-in" placeholder="Votre Rôle" class="bg-white/5 p-5 rounded-2xl border border-white/5 outline-none focus:border-blue-500 transition">
                     </div>
-                    <textarea id="input-msg" placeholder="Votre message..." class="w-full bg-white/5 p-4 rounded-2xl h-32 outline-none focus:border-blue-500 border border-transparent transition"></textarea>
-                    <button onclick="postUserReview()" class="w-full py-4 bg-blue-600 rounded-2xl font-black hover:bg-blue-500 transition shadow-lg shadow-blue-600/30">PUBLIER MON TÉMOIGNAGE</button>
+                    <textarea id="msg-in" placeholder="Votre message..." class="w-full bg-white/5 p-5 rounded-2xl h-32 border border-white/5 outline-none focus:border-blue-500 transition"></textarea>
+                    <button onclick="submitReview()" class="w-full py-5 bg-white text-black font-black rounded-2xl hover:scale-[1.02] transition shadow-2xl active:scale-95">PUBLIER MON TÉMOIGNAGE</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="inscription" class="py-24 px-6 bg-blue-600/5">
-        <div class="max-w-4xl mx-auto glass p-16 rounded-[4rem] border-blue-500/20 text-center">
-            <h2 class="text-4xl font-black mb-12 uppercase tracking-tighter">Lancez l'aventure</h2>
-            <form id="reg-form" class="grid md:grid-cols-2 gap-6">
-                <input type="text" placeholder="Nom complet" required class="bg-white/5 p-5 rounded-2xl outline-none border border-white/10 focus:border-blue-500">
-                <input type="email" placeholder="Email" required class="bg-white/5 p-5 rounded-2xl outline-none border border-white/10 focus:border-blue-500">
-                <input type="tel" placeholder="WhatsApp" required class="bg-white/5 p-5 rounded-2xl outline-none border border-white/10 focus:border-blue-500 col-span-2">
-                <button type="submit" class="col-span-2 py-5 bg-blue-600 rounded-2xl font-black tracking-widest uppercase hover:scale-[1.02] transition">S'inscrire Maintenant</button>
+    <section id="inscription" class="py-32 px-6">
+        <div class="max-w-5xl mx-auto glass-card p-16 rounded-[4rem] text-center border-blue-500/20 shadow-2xl relative">
+            <div class="absolute inset-0 bg-gradient-to-b from-blue-600/5 to-transparent"></div>
+            <h2 class="text-5xl font-black space-font mb-6 leading-tight">PRÊT À <span class="text-blue-500">DOMINER</span> <br> LA LANGUE ?</h2>
+            <p class="text-gray-400 mb-12">Rejoignez l'élite des élèves de la Darija Academy.</p>
+            <form id="reg-form" class="grid md:grid-cols-2 gap-6 relative z-10">
+                <input type="text" placeholder="Nom et Prénom" required class="bg-white/5 p-5 rounded-2xl border border-white/10 outline-none focus:border-blue-500">
+                <input type="email" placeholder="Email professionnel" required class="bg-white/5 p-5 rounded-2xl border border-white/10 focus:border-blue-500">
+                <button type="submit" class="md:col-span-2 py-6 bg-blue-600 rounded-2xl font-black text-lg tracking-widest uppercase shadow-2xl shadow-blue-500/30 hover:bg-blue-500 transition">VALIDER MON ADHÉSION</button>
             </form>
         </div>
     </section>
 
-    <footer class="py-20 text-center">
-        <div class="flex justify-center space-x-10 text-2xl text-gray-500 mb-8">
-            <a href="#" class="hover:text-pink-500"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="hover:text-white"><i class="fab fa-tiktok"></i></a>
-            <a href="#" class="hover:text-blue-400"><i class="fab fa-linkedin"></i></a>
+    <div class="fixed bottom-8 right-8 z-[2000]">
+        <div id="chat-ui" class="glass-card w-[380px] h-[550px] rounded-[2.5rem] mb-6 flex flex-col shadow-2xl overflow-hidden border-white/20">
+            <div class="p-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="font-bold space-font tracking-widest text-xs uppercase">Darija AI Assistant</span>
+                </div>
+                <button onclick="toggleChat()"><i class="fas fa-times opacity-60 hover:opacity-100"></i></button>
+            </div>
+            <div id="chat-box" class="flex-1 p-6 overflow-y-auto space-y-6 text-[12px] bg-black/40">
+                <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-[10px] shrink-0">AI</div>
+                    <div class="bg-white/5 p-4 rounded-2xl rounded-tl-none border border-white/5 leading-relaxed">
+                        Salam ! Je suis votre tuteur IA. Je connais tout sur Darija Academy. Quelle est votre question ?
+                    </div>
+                </div>
+            </div>
+            <div id="ai-typing" class="px-6 py-2 hidden">
+                <span class="text-[10px] text-blue-400 font-bold animate-pulse uppercase tracking-widest">L'IA analyse votre requête...</span>
+            </div>
+            <div class="p-4 bg-white/5 border-t border-white/5 flex items-center space-x-3">
+                <input type="text" id="chat-input" class="bg-transparent flex-1 outline-none text-sm px-2" placeholder="Posez une question sur les prix, les cours...">
+                <button onclick="sendChat()" class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center hover:scale-105 transition active:scale-95"><i class="fas fa-paper-plane text-xs"></i></button>
+            </div>
         </div>
-        <p class="text-[10px] font-bold text-gray-600 uppercase tracking-[0.5em]">© 2026 DARIJA ACADEMY | Made for Excellence</p>
+        <button onclick="toggleChat()" class="shimmer w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-2xl text-white shadow-2xl hover:scale-110 hover:-rotate-6 transition-all duration-300 active:scale-90">
+            <i class="fas fa-robot"></i>
+        </button>
+    </div>
+
+    <footer class="py-20 text-center border-t border-white/5">
+        <div class="flex justify-center space-x-12 mb-10">
+            <a href="#" class="text-gray-500 hover:text-pink-500 transition text-2xl"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-gray-500 hover:text-white transition text-2xl"><i class="fab fa-tiktok"></i></a>
+            <a href="#" class="text-gray-500 hover:text-blue-400 transition text-2xl"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p class="text-[10px] font-bold text-gray-700 space-font tracking-[0.6em] uppercase">© 2026 DARIJA ACADEMY | Designed for the 1%</p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        AOS.init({ duration: 800, once: true });
+        AOS.init({ duration: 1000, once: true });
 
-        // EASTER EGG MATRIX
-        let logoClicks = 0;
-        function devEasterEgg() {
-            logoClicks++;
-            if(logoClicks >= 5) {
-                document.body.classList.toggle('matrix-mode');
-                console.log("MATRIX_MODE_ACTIVATED");
+        // EASTER EGG SYSTEM
+        let counts = 0;
+        function triggerEasterEgg() {
+            counts++;
+            if(counts === 5) {
+                document.body.classList.toggle('cyber-mode');
+                alert("SYSTEM BREACH: Cyber-Interface activée.");
+                counts = 0;
             }
         }
 
-        // POST AVIS
-        function postUserReview() {
-            const name = document.getElementById('input-name').value;
-            const role = document.getElementById('input-role').value;
-            const msg = document.getElementById('input-msg').value;
-
-            if(!name || !msg) return alert("Veuillez remplir votre nom et votre message.");
-
-            const container = document.getElementById('avis-list');
-            const avatarUrl = `https://i.pravatar.cc/150?u=${name}`;
-
-            const html = `
-                <div class="glass p-8 rounded-[2.5rem] border-blue-500/50 border-2 animate-bounce">
-                    <div class="flex items-center space-x-4 mb-6">
-                        <div class="avatar-frame"><img src="${avatarUrl}" class="w-14 h-14 rounded-full border-2 border-black"></div>
-                        <div><h4 class="font-bold">${name}</h4><p class="text-[10px] text-gray-500 font-bold uppercase">${role || 'Élève DA'}</p></div>
-                    </div>
-                    <p class="text-gray-400 text-sm italic">"${msg}"</p>
-                </div>
-            `;
-            container.insertAdjacentHTML('afterbegin', html);
-            document.getElementById('input-name').value = "";
-            document.getElementById('input-msg').value = "";
-            document.getElementById('input-role').value = "";
+        // CHATBOT LOGIC
+        function toggleChat() {
+            const chat = document.getElementById('chat-ui');
+            chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
         }
 
-        // FORMULAIRE
+        function sendChat() {
+            const input = document.getElementById('chat-input');
+            const box = document.getElementById('chat-box');
+            const typing = document.getElementById('ai-typing');
+            if(!input.value) return;
+
+            box.innerHTML += `
+                <div class="flex justify-end">
+                    <div class="bg-blue-600 p-4 rounded-2xl rounded-tr-none max-w-[80%] font-bold shadow-lg shadow-blue-600/20 italic">"${input.value}"</div>
+                </div>
+            `;
+            const query = input.value.toLowerCase();
+            input.value = "";
+            box.scrollTop = box.scrollHeight;
+
+            typing.classList.remove('hidden');
+
+            setTimeout(() => {
+                typing.classList.add('hidden');
+                let res = "C'est une excellente question. Pour des détails précis, je vous suggère de contacter notre support VIP sur WhatsApp !";
+                
+                if(query.includes("prix") || query.includes("combien")) res = "Nos abonnements sont : Base (149 DH), Chabab (349 DH) et Sultan (899 DH). Le pack Chabab est notre best-seller.";
+                if(query.includes("salam")) res = "Salam ! Kidayr ? Je suis là pour t'aider à parler Darija comme un vrai Marocain.";
+                if(query.includes("chefchaouen")) res = "Notre expédition à Chefchaouen est prévue pour mai 2026. Elle est incluse dans le pack Sultan !";
+                if(query.includes("recrute") || query.includes("job")) res = "Absolument, nous cherchons des talents. Envoyez votre candidature via la section Actualités.";
+
+                box.innerHTML += `
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-[10px] shrink-0">AI</div>
+                        <div class="bg-white/5 p-4 rounded-2xl rounded-tl-none border border-white/5 leading-relaxed">${res}</div>
+                    </div>
+                `;
+                box.scrollTop = box.scrollHeight;
+            }, 1500);
+        }
+
+        // SUBMIT REVIEW
+        function submitReview() {
+            const name = document.getElementById('name-in').value;
+            const role = document.getElementById('role-in').value;
+            const msg = document.getElementById('msg-in').value;
+            if(!name || !msg) return alert("Veuillez remplir les champs.");
+
+            const grid = document.getElementById('avis-grid');
+            const html = `
+                <div class="glass-card p-8 rounded-[2.5rem] border-blue-500 border-2 animate-pulse">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <img src="https://i.pravatar.cc/150?u=${name}" class="w-14 h-14 rounded-full border-2 border-blue-600 p-1">
+                        <div><h4 class="font-bold">${name}</h4><p class="text-[9px] text-gray-500 font-black uppercase">${role || 'Membre Élite'}</p></div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic leading-relaxed">"${msg}"</p>
+                </div>
+            `;
+            grid.insertAdjacentHTML('afterbegin', html);
+            document.getElementById('name-in').value = "";
+            document.getElementById('role-in').value = "";
+            document.getElementById('msg-in').value = "";
+        }
+
+        // REG FORM
         document.getElementById('reg-form').onsubmit = (e) => {
             e.preventDefault();
             confetti({
                 particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#3b82f6', '#ffffff']
+                spread: 100,
+                origin: { y: 0.7 },
+                colors: ['#3e81f6', '#ffffff', '#c084fc']
             });
-            alert("Mabrouk ! Votre demande a été reçue !");
+            alert("MABROUK ! Votre dossier est en cours de traitement par nos équipes.");
             e.target.reset();
         }
     </script>
