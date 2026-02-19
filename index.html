@@ -3,190 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darija Academy | Apprenez le Marocain</title>
+    <title>Darija Academy | Excellence Linguistique</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+
     <style>
-        .gradient-text { background: linear-gradient(90deg, #1e40af, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .card-hover:hover { transform: translateY(-10px); transition: all 0.3s ease; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .gradient-border { border: 2px solid transparent; background: linear-gradient(#0f172a, #0f172a) padding-box, linear-gradient(90deg, #3b82f6, #8b5cf6) border-box; }
+        .chat-window { height: 400px; display: none; }
+        .blob { position: absolute; width: 300px; height: 300px; background: #3b82f6; filter: blur(80px); opacity: 0.2; z-index: -1; }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800">
+<body class="overflow-x-hidden">
 
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-blue-800">DARIJA ACADEMY</h1>
-            <div class="hidden md:flex space-x-8 font-medium">
-                <a href="#accueil" class="hover:text-blue-600">Accueil</a>
-                <a href="#activites" class="hover:text-blue-600">Activités</a>
-                <a href="#stats" class="hover:text-blue-600">Impact</a>
-                <a href="#prix" class="hover:text-blue-600">Tarifs</a>
-                <a href="#faq" class="hover:text-blue-600">FAQ</a>
+    <div class="blob top-10 left-10"></div>
+    <div class="blob bottom-20 right-10 bg-purple-600"></div>
+
+    <nav class="fixed w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto glass rounded-2xl px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-xl text-white">D</div>
+                <span class="text-xl font-extrabold tracking-tighter">DARIJA ACADEMY</span>
             </div>
-            <a href="#inscription" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition">S'inscrire</a>
+            <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest text-gray-400">
+                <a href="#accueil" class="hover:text-blue-400 transition">Accueil</a>
+                <a href="#stats" class="hover:text-blue-400 transition">Chiffres</a>
+                <a href="#tarifs" class="hover:text-blue-400 transition">Abonnements</a>
+                <a href="#faq" class="hover:text-blue-400 transition">FAQ</a>
+            </div>
+            <a href="#inscription" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-xl text-sm font-bold transition shadow-[0_0_20px_rgba(59,130,246,0.5)]">S'INSCRIRE</a>
         </div>
     </nav>
 
-    <section id="accueil" class="pt-32 pb-20 bg-gradient-to-br from-blue-50 to-indigo-100">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-10 md:mb-0">
-                <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">Maîtrisez la Darija <br><span class="gradient-text">Facilement & Rapidement</span></h2>
-                <p class="text-lg text-gray-600 mb-8 leading-relaxed">Rejoignez la plus grande communauté d'apprentissage de la langue marocaine. Des cours interactifs, des prix imbattables et une immersion culturelle garantie.</p>
-                <div class="flex space-x-4">
-                    <a href="#inscription" class="bg-blue-600 text-white px-8 py-4 rounded-lg shadow-lg hover:bg-blue-700">Commencer maintenant</a>
-                    <a href="https://wa.me/212600000000" class="flex items-center bg-green-500 text-white px-8 py-4 rounded-lg shadow-lg hover:bg-green-600">
-                        <i class="fab fa-whatsapp mr-2"></i> WhatsApp
-                    </a>
-                </div>
-            </div>
-            <div class="md:w-1/2">
-                <img src="https://images.unsplash.com/photo-1528460033278-a62cc221034d?auto=format&fit=crop&w=800" alt="Apprentissage" class="rounded-2xl shadow-2xl">
+    <section id="accueil" class="pt-48 pb-20 px-6">
+        <div class="max-w-7xl mx-auto text-center" data-aos="fade-up">
+            <span class="px-4 py-2 rounded-full bg-blue-900/30 text-blue-400 text-xs font-bold border border-blue-800/50 mb-6 inline-block uppercase tracking-widest">L'avenir de la Darija est ici</span>
+            <h1 class="text-6xl md:text-8xl font-extrabold mb-8 leading-none tracking-tight">
+                Parlez Marocain <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Sans Limites.</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-gray-400 text-lg mb-10">Une plateforme immersive, des tuteurs natifs et une intelligence artificielle à votre service pour maîtriser la Darija en 90 jours.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="px-10 py-4 bg-white text-black font-bold rounded-2xl hover:scale-105 transition duration-300">Essai Gratuit</button>
+                <a href="https://wa.me/212600000000" class="px-10 py-4 glass text-white font-bold rounded-2xl hover:bg-white/10 transition flex items-center">
+                    <i class="fab fa-whatsapp mr-3 text-green-400"></i> Nous Contacter
+                </a>
             </div>
         </div>
     </section>
 
-    <section id="stats" class="py-16 bg-blue-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div><div class="text-4xl font-bold mb-2">5000+</div><div class="text-blue-200">Étudiants</div></div>
-            <div><div class="text-4xl font-bold mb-2">15+</div><div class="text-blue-200">Experts</div></div>
-            <div><div class="text-4xl font-bold mb-2">98%</div><div class="text-blue-200">Satisfaction</div></div>
-            <div><div class="text-4xl font-bold mb-2">24/7</div><div class="text-blue-200">Support</div></div>
+    <section id="stats" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="glass p-8 rounded-3xl text-center border-b-4 border-blue-500" data-aos="zoom-in">
+                <div class="text-5xl font-black mb-2 counter" data-target="12000">0</div>
+                <div class="text-gray-500 font-bold uppercase text-xs tracking-widest">Étudiants Actifs</div>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center border-b-4 border-purple-500" data-aos="zoom-in" data-aos-delay="100">
+                <div class="text-5xl font-black mb-2 counter" data-target="45">0</div>
+                <div class="text-gray-500 font-bold uppercase text-xs tracking-widest">Formateurs Pro</div>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center border-b-4 border-blue-500" data-aos="zoom-in" data-aos-delay="200">
+                <div class="text-5xl font-black mb-2 counter" data-target="99">0</div>
+                <div class="text-gray-500 font-bold uppercase text-xs tracking-widest">% Réussite</div>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center border-b-4 border-purple-500" data-aos="zoom-in" data-aos-delay="300">
+                <div class="text-5xl font-black mb-2 counter" data-target="15">0</div>
+                <div class="text-gray-500 font-bold uppercase text-xs tracking-widest">Pays Atteints</div>
+            </div>
         </div>
     </section>
 
-    <section id="activites" class="py-20">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-16">Nos Activités & Programmes</h2>
+    <section id="tarifs" class="py-24 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-black text-center mb-16 italic">NOS ABONNEMENTS <span class="text-blue-500">ABORDABLES</span></h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-xl shadow-lg card-hover border-b-4 border-blue-600">
-                    <i class="fas fa-comments-dollar text-4xl text-blue-600 mb-6"></i>
-                    <h3 class="text-xl font-bold mb-4">Conversation Intensive</h3>
-                    <p class="text-gray-600">Pratiquez avec des natifs pour débloquer votre expression orale en un temps record.</p>
-                </div>
-                <div class="bg-white p-8 rounded-xl shadow-lg card-hover border-b-4 border-blue-600">
-                    <i class="fas fa-book-open text-4xl text-blue-600 mb-6"></i>
-                    <h3 class="text-xl font-bold mb-4">Grammaire & Vocabulaire</h3>
-                    <p class="text-gray-600">Les bases solides de la Darija expliquées simplement pour tous les niveaux.</p>
-                </div>
-                <div class="bg-white p-8 rounded-xl shadow-lg card-hover border-b-4 border-blue-600">
-                    <i class="fas fa-landmark text-4xl text-blue-600 mb-6"></i>
-                    <h3 class="text-xl font-bold mb-4">Immersion Culturelle</h3>
-                    <p class="text-gray-600">Découvrez les coutumes, les proverbes et la richesse du patrimoine marocain.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-20 bg-gray-100">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-12">Actualités de l'Académie</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="flex bg-white rounded-lg overflow-hidden shadow">
-                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=400" class="w-1/3 object-cover" alt="Event">
-                    <div class="p-6">
-                        <span class="text-blue-600 text-sm font-bold uppercase">Nouveau</span>
-                        <h4 class="text-xl font-bold mt-2">Lancement des cours d'été 2024</h4>
-                        <p class="text-gray-600 mt-2 text-sm">Inscrivez-vous avant le 15 juin pour bénéficier de -20%.</p>
-                    </div>
-                </div>
-                </div>
-        </div>
-    </section>
-
-    <section id="prix" class="py-20">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-16">Nos Tarifs Accessibles</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 bg-white border rounded-2xl hover:border-blue-600 transition">
-                    <h3 class="text-xl font-bold mb-4">Débutant</h3>
-                    <div class="text-4xl font-black mb-6">199 DH<span class="text-sm font-normal text-gray-500">/mois</span></div>
-                    <ul class="text-left space-y-4 mb-8">
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> 2 cours par semaine</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> Support PDF gratuit</li>
+                <div class="glass p-10 rounded-[2rem] border-white/5 hover:border-blue-500/50 transition group" data-aos="fade-right">
+                    <h3 class="text-2xl font-bold mb-4">Pack <span class="text-blue-400 italic">Boussa</span></h3>
+                    <p class="text-gray-500 mb-6 text-sm">Idéal pour les touristes et voyageurs curieux.</p>
+                    <div class="text-5xl font-black mb-8">149 DH<span class="text-lg text-gray-500 font-normal">/mois</span></div>
+                    <ul class="space-y-4 mb-10 text-gray-400">
+                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Accès à 20 vidéos</li>
+                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Guide PDF Express</li>
+                        <li><i class="fas fa-times-circle text-red-800 mr-2"></i> Coaching en direct</li>
                     </ul>
-                    <a href="#inscription" class="block w-full py-3 rounded-lg border border-blue-600 text-blue-600 font-bold hover:bg-blue-600 hover:text-white">Choisir</a>
+                    <button class="w-full py-4 rounded-xl border border-white/20 group-hover:bg-blue-600 transition font-bold">Choisir ce plan</button>
                 </div>
-                <div class="p-8 bg-blue-600 text-white border rounded-2xl transform scale-105 shadow-xl">
-                    <h3 class="text-xl font-bold mb-4 text-blue-100">Intensif</h3>
-                    <div class="text-4xl font-black mb-6">399 DH<span class="text-sm font-normal text-blue-200">/mois</span></div>
-                    <ul class="text-left space-y-4 mb-8">
-                        <li><i class="fas fa-check text-blue-300 mr-2"></i> 5 cours par semaine</li>
-                        <li><i class="fas fa-check text-blue-300 mr-2"></i> Accès communauté VIP</li>
+                <div class="glass p-10 rounded-[2rem] border-blue-500/50 shadow-[0_0_50px_rgba(59,130,246,0.2)] relative transform md:-translate-y-4" data-aos="fade-up">
+                    <div class="absolute -top-4 right-10 bg-blue-600 text-xs font-bold px-4 py-1 rounded-full">POPULAIRE</div>
+                    <h3 class="text-2xl font-bold mb-4 italic text-blue-400">Pack Chabab</h3>
+                    <p class="text-gray-400 mb-6 text-sm">Le meilleur rapport qualité/prix pour parler couramment.</p>
+                    <div class="text-5xl font-black mb-8">349 DH<span class="text-lg text-gray-500 font-normal">/mois</span></div>
+                    <ul class="space-y-4 mb-10 text-blue-100">
+                        <li><i class="fas fa-check-circle text-blue-400 mr-2"></i> 2 Séances Live / semaine</li>
+                        <li><i class="fas fa-check-circle text-blue-400 mr-2"></i> Accès Communauté Discord</li>
+                        <li><i class="fas fa-check-circle text-blue-400 mr-2"></i> Quiz Interactifs</li>
                     </ul>
-                    <a href="#inscription" class="block w-full py-3 rounded-lg bg-white text-blue-600 font-bold hover:bg-blue-50">Populaire</a>
+                    <button class="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-500 transition font-bold shadow-lg shadow-blue-900/40">Décollage immédiat</button>
                 </div>
+                <div class="glass p-10 rounded-[2rem] border-white/5 hover:border-purple-500/50 transition group" data-aos="fade-left">
+                    <h3 class="text-2xl font-bold mb-4">Pack <span class="text-purple-400 italic">Sultan</span></h3>
+                    <p class="text-gray-500 mb-6 text-sm">Immersion totale avec coaching personnalisé 1-on-1.</p>
+                    <div class="text-5xl font-black mb-8">899 DH<span class="text-lg text-gray-500 font-normal">/mois</span></div>
+                    <ul class="space-y-4 mb-10 text-gray-400">
+                        <li><i class="fas fa-check-circle text-purple-500 mr-2"></i> Professeur privé dédié</li>
+                        <li><i class="fas fa-check-circle text-purple-500 mr-2"></i> Matériel Premium à domicile</li>
+                        <li><i class="fas fa-check-circle text-purple-500 mr-2"></i> Certification d'Académie</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl border border-white/20 group-hover:bg-purple-600 transition font-bold text-purple-400 group-hover:text-white">Devenir Sultan</button>
                 </div>
-        </div>
-    </section>
-
-    <section class="py-20 bg-blue-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-16">Avis de nos anciens étudiants</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <div class="flex text-yellow-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="italic text-gray-600 mb-4">"Une méthode incroyable ! J'ai pu discuter avec ma belle-famille après seulement 2 mois."</p>
-                    <div class="font-bold">- Sarah J.</div>
-                </div>
-                </div>
-        </div>
-    </section>
-
-    <section id="faq" class="py-20">
-        <div class="max-w-3xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">Questions Fréquentes</h2>
-            <div class="space-y-4">
-                <details class="bg-white p-4 rounded-lg shadow cursor-pointer">
-                    <summary class="font-bold">Est-ce que les cours sont en ligne ?</summary>
-                    <p class="mt-4 text-gray-600">Oui, tous nos cours sont disponibles via Zoom ou Google Meet avec des enregistrements accessibles à vie.</p>
-                </details>
-                <details class="bg-white p-4 rounded-lg shadow cursor-pointer">
-                    <summary class="font-bold">Quels sont les modes de paiement ?</summary>
-                    <p class="mt-4 text-gray-600">Nous acceptons les virements bancaires, CIH Express, et les paiements par carte.</p>
-                </details>
             </div>
         </div>
     </section>
 
-    <section id="inscription" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-16">
-            <div>
-                <h2 class="text-3xl font-bold mb-6">Prêt à commencer ?</h2>
-                <p class="text-gray-600 mb-8">Remplissez le formulaire et notre conseiller pédagogique vous contactera sous 24h.</p>
-                <form class="space-y-4">
-                    <input type="text" placeholder="Nom Complet" class="w-full p-4 bg-gray-50 border rounded-lg outline-blue-600">
-                    <input type="email" placeholder="Email" class="w-full p-4 bg-gray-50 border rounded-lg outline-blue-600">
-                    <select class="w-full p-4 bg-gray-50 border rounded-lg outline-blue-600">
-                        <option>Choisir un niveau</option>
-                        <option>Débutant</option>
-                        <option>Intermédiaire</option>
-                    </section>
-                    <textarea placeholder="Votre message" class="w-full p-4 bg-gray-50 border rounded-lg h-32 outline-blue-600"></textarea>
-                    <button class="w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition">Envoyer ma demande</button>
-                </form>
-            </div>
-            <div class="bg-blue-50 p-10 rounded-2xl">
-                <h3 class="text-2xl font-bold mb-6">Contact direct</h3>
-                <div class="space-y-6">
-                    <div class="flex items-center"><i class="fas fa-phone-alt text-blue-600 mr-4"></i> +212 6 00 00 00 00</div>
-                    <div class="flex items-center"><i class="fas fa-envelope text-blue-600 mr-4"></i> contact@darija-academy.com</div>
-                    <div class="flex items-center"><i class="fas fa-map-marker-alt text-blue-600 mr-4"></i> Casablanca, Maroc</div>
-                    <hr class="my-6">
-                    <div class="flex space-x-6">
-                        <a href="#" class="text-2xl hover:text-blue-600"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-2xl hover:text-blue-600"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-2xl hover:text-blue-600"><i class="fab fa-linkedin"></i></a>
+    <section class="py-20 bg-black/30 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12">PAROLES D'ÉTUDIANTS</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass p-6 rounded-2xl">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=1" class="w-12 h-12 rounded-full border-2 border-blue-500">
+                        <div><h4 class="font-bold">Adam Leroy</h4><span class="text-xs text-blue-400">Lyon, FR</span></div>
                     </div>
+                    <p class="text-gray-400 text-sm">"J'ai enfin pu négocier au souk sans me faire arnaquer ! Merci Darija Academy."</p>
                 </div>
-            </div>
+                </div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p>&copy; 2026 Darija Academy. Tous droits réservés.</p>
+    <div class="fixed bottom-6 right-6 z-[100]">
+        <div id="chat-window" class="chat-window w-80 mb-4 glass rounded-3xl overflow-hidden shadow-2xl flex flex-col">
+            <div class="bg-blue-600 p-4 font-bold flex justify-between items-center">
+                <span><i class="fas fa-robot mr-2"></i> DarijaBot</span>
+                <button onclick="toggleChat()" class="text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto text-sm space-y-3">
+                <div class="bg-white/10 p-2 rounded-lg max-w-[80%]">Salam ! Comment puis-je vous aider aujourd'hui ?</div>
+            </div>
+            <div class="p-4 bg-white/5 border-t border-white/10 flex">
+                <input id="chat-input" type="text" placeholder="Posez une question..." class="bg-transparent flex-1 outline-none text-sm">
+                <button onclick="sendMessage()" class="text-blue-500"><i class="fas fa-paper-plane"></i></button>
+            </div>
         </div>
-    </footer>
+        <button onclick="toggleChat()" class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-2xl shadow-lg hover:scale-110 transition animate-bounce">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+    </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // Compteur de Statistiques
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const increment = target / 200;
+            const updateCounter = () => {
+                const c = +counter.innerText;
+                if (c < target) {
+                    counter.innerText = `${Math.ceil(c + increment)}`;
+                    setTimeout(updateCounter, 1);
+                } else { counter.innerText = target + (target > 90 ? "+" : ""); }
+            };
+            updateCounter();
+        });
+
+        // Chatbot Logic
+        function toggleChat() {
+            const win = document.getElementById('chat-window');
+            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const container = document.getElementById('chat-messages');
+            if (input.value.trim() === "") return;
+
+            // Message Utilisateur
+            container.innerHTML += `<div class="bg-blue-600/20 p-2 rounded-lg max-w-[80%] ml-auto text-right">${input.value}</div>`;
+            
+            // Réponse Automatique (Simulée)
+            setTimeout(() => {
+                let reply = "Je ne suis qu'un bot, mais un conseiller va vous répondre sur WhatsApp !";
+                if(input.value.toLowerCase().includes("prix")) reply = "Nos packs commencent à 149 DH/mois. Consultez la section tarifs !";
+                if(input.value.toLowerCase().includes("cours")) reply = "Nous proposons des cours en vidéo et des lives avec des professeurs.";
+                
+                container.innerHTML += `<div class="bg-white/10 p-2 rounded-lg max-w-[80%]">${reply}</div>`;
+                container.scrollTop = container.scrollHeight;
+            }, 1000);
+
+            input.value = "";
+        }
+    </script>
 </body>
 </html>
