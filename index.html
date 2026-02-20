@@ -1,471 +1,313 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darija Academy | Apprenez la Darija facilement</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Darija Academy - Apprenez le Marocain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* --- VARIABLES & RESET --- */
-        :root {
-            --primary: #4F46E5;
-            --secondary: #10B981;
-            --dark: #1F2937;
-            --light: #F3F4F6;
-            --white: #FFFFFF;
-            --shadow-3d: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), inset 0 -3px 0 rgba(0,0,0,0.1);
-            --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), inset 0 -3px 0 var(--primary);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--light); color: var(--dark); line-height: 1.6; overflow-x: hidden; }
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        section { padding: 80px 0; }
-        h1, h2, h3 { color: var(--dark); margin-bottom: 20px; }
-        h2 { text-align: center; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* --- NAVBAR --- */
-        header { background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; width: 100%; top: 0; z-index: 1000; }
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 1.8rem; font-weight: bold; color: var(--primary); }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { font-weight: 500; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--primary); }
-
-        /* --- HERO SECTION 3D --- */
-        .hero { margin-top: 60px; min-height: 80vh; display: flex; align-items: center; background: linear-gradient(135deg, #e0e7ff 0%, #d1fae5 100%); perspective: 1000px; }
-        .hero-content { text-align: center; max-width: 800px; margin: 0 auto; transform-style: preserve-3d; animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
-        .hero h1 { font-size: 3.5rem; color: var(--primary); text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
-        .hero p { font-size: 1.2rem; margin-bottom: 30px; }
-        .btn { display: inline-block; padding: 12px 30px; background: var(--primary); color: var(--white); border-radius: 8px; font-weight: bold; box-shadow: var(--shadow-3d); transition: all 0.3s; border: none; cursor: pointer; }
-        .btn:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
-
-        /* --- STATISTIQUES --- */
-        .stats { background: var(--dark); color: var(--white); padding: 40px 0; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
-        .stat-item h3 { font-size: 2.5rem; color: var(--secondary); margin-bottom: 5px; }
-
-        /* --- ACTUALITÉS --- */
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
-        .news-card { background: var(--white); border-radius: 15px; overflow: hidden; box-shadow: var(--shadow-3d); transition: transform 0.3s; }
-        .news-card:hover { transform: scale(1.05); }
-        .news-card img { width: 100%; height: 200px; object-fit: cover; }
-        .news-content { padding: 20px; }
-        .badge { background: var(--secondary); color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; }
-
-        /* --- ACTIVITÉS --- */
-        .activities { background: var(--white); }
-        .act-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 40px; }
-        .act-card { padding: 30px; background: var(--light); border-radius: 15px; text-align: center; box-shadow: var(--shadow-3d); transition: transform 0.4s; }
-        .act-card:hover { transform: translateY(-15px) rotateX(10deg); background: var(--white); border: 1px solid var(--primary); }
-        .act-card i { font-size: 3rem; color: var(--primary); margin-bottom: 15px; }
-
-        /* --- PRIX / TARIFS --- */
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
-        .price-card { background: var(--white); padding: 40px 20px; text-align: center; border-radius: 15px; box-shadow: var(--shadow-3d); transition: transform 0.3s; }
-        .price-card:hover { transform: translateY(-10px); }
-        .price-card.popular { border: 2px solid var(--secondary); transform: scale(1.05); }
-        .price-card.popular:hover { transform: scale(1.05) translateY(-10px); }
-        .price { font-size: 2.5rem; font-weight: bold; color: var(--primary); margin: 20px 0; }
-
-        /* --- AVIS ET TÉMOIGNAGES --- */
-        .reviews { background: var(--dark); color: var(--white); }
-        .reviews h2 { color: var(--white); }
-        .review-grid { display: flex; overflow-x: auto; gap: 20px; padding: 20px 0; scroll-snap-type: x mandatory; }
-        .review-card { min-width: 300px; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; scroll-snap-align: center; backdrop-filter: blur(5px); }
-        .reviewer { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-        .reviewer img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
-        .stars { color: #F59E0B; }
-        .add-review { max-width: 600px; margin: 40px auto 0; background: var(--white); padding: 30px; border-radius: 15px; color: var(--dark); }
-
-        /* --- FAQ --- */
-        .faq-item { background: var(--white); margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; }
-        .faq-question { padding: 20px; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; }
-        .faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .faq-item.active .faq-answer { padding: 0 20px 20px; max-height: 200px; }
-
-        /* --- FORMULAIRES --- */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-control { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; }
-        textarea.form-control { height: 100px; resize: vertical; }
-
-        /* --- FOOTER & SOCIALS --- */
-        footer { background: var(--dark); color: var(--white); padding: 50px 0 20px; text-align: center; }
-        .social-links { margin-bottom: 20px; }
-        .social-links a { font-size: 1.5rem; margin: 0 10px; transition: color 0.3s; }
-        .social-links a:hover { color: var(--secondary); }
-
-        /* --- WHATSAPP FLOAT --- */
-        .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; box-shadow: var(--shadow-3d); z-index: 1000; transition: transform 0.3s; }
-        .whatsapp-float:hover { transform: scale(1.1); }
-
-        /* --- CHATBOT LLM --- */
-        .chatbot-btn { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; box-shadow: var(--shadow-3d); z-index: 1000; cursor: pointer; transition: transform 0.3s; }
-        .chatbot-btn:hover { transform: scale(1.1); }
-        .chatbot-window { position: fixed; bottom: 90px; right: 20px; width: 350px; height: 450px; background: var(--white); border-radius: 15px; box-shadow: var(--shadow-hover); display: none; flex-direction: column; z-index: 1000; overflow: hidden; border: 1px solid #eee; }
-        .chat-header { background: var(--primary); color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; }
-        .close-chat { cursor: pointer; }
-        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #fafafa; }
-        .msg { padding: 10px 15px; border-radius: 15px; max-width: 80%; font-size: 0.9rem; }
-        .msg.bot { background: #e0e7ff; align-self: flex-start; border-bottom-left-radius: 2px; }
-        .msg.user { background: var(--secondary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-        .chat-footer { padding: 10px; border-top: 1px solid #eee; display: flex; gap: 5px; }
-        .chat-footer input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 20px; outline: none; }
-        .chat-footer button { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .act-grid { grid-template-columns: 1fr; }
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; background-color: #f8fafc; }
+        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .card-3d { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-3d:hover { transform: translateY(-10px) rotateX(2deg); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .gradient-text { background: linear-gradient(90deg, #059669, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
 <body>
 
-    <header>
-        <nav>
-            <div class="logo"><i class="fas fa-language"></i> Darija Academy</div>
-            <div class="nav-links">
-                <a href="#hero">Accueil</a>
-                <a href="#actualites">Actualités</a>
-                <a href="#prix">Tarifs</a>
-                <a href="#avis">Avis</a>
-                <a href="#inscription">Inscription</a>
+    <nav class="fixed w-full z-50 glass border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="text-2xl font-bold text-emerald-600">Darija<span class="text-gray-800">Academy</span></div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-emerald-600 transition">Accueil</a>
+                    <a href="#stats" class="hover:text-emerald-600 transition">Stats</a>
+                    <a href="#pricing" class="hover:text-emerald-600 transition">Abonnements</a>
+                    <a href="#news" class="hover:text-emerald-600 transition">Actualités</a>
+                    <a href="#contact" class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">S'inscrire</a>
+                </div>
             </div>
-        </nav>
-    </header>
-
-    <section id="hero" class="hero">
-        <div class="container hero-content">
-            <h1>Parlez Darija comme un local !</h1>
-            <p>Rejoignez la Darija Academy. Des prix imbattables, des formateurs passionnés et une méthode interactive en 3D immersive.</p>
-            <a href="#inscription" class="btn">S'inscrire Maintenant</a>
         </div>
-    </section>
+    </nav>
 
-    <section class="stats">
-        <div class="container stats-grid">
-            <div class="stat-item">
-                <h3 class="counter" data-target="1500">0</h3>
-                <p>Étudiants satisfaits</p>
-            </div>
-            <div class="stat-item">
-                <h3 class="counter" data-target="50">0</h3>
-                <p>Formateurs experts</p>
-            </div>
-            <div class="stat-item">
-                <h3 class="counter" data-target="100">0</h3>
-                <p>% de Réussite</p>
+    <section id="home" class="pt-32 pb-20 bg-emerald-50 text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6">Parlez Darija comme un <span class="gradient-text">Local</span></h1>
+            <p class="text-xl text-gray-600 mb-10">La première académie interactive pour maîtriser l'arabe marocain, quel que soit votre profil.</p>
+            <div class="flex justify-center space-x-4">
+                <a href="#pricing" class="px-8 py-3 bg-emerald-600 text-white rounded-full text-lg shadow-lg hover:bg-emerald-700 transition">Voir les offres</a>
+                <a href="https://wa.me/212600000000" class="px-8 py-3 bg-white text-emerald-600 border border-emerald-600 rounded-full text-lg hover:bg-emerald-50 transition"><i class="fab fa-whatsapp"></i> Chat WhatsApp</a>
             </div>
         </div>
     </section>
 
-    <section id="actualites" class="container">
-        <h2>Nos Actualités</h2>
-        <div class="news-grid">
-            <div class="news-card">
-                <img src="https://picsum.photos/400/200?random=1" alt="Ouverture">
-                <div class="news-content">
-                    <span class="badge">Nouveau</span>
-                    <h3>Ouverture des inscriptions 2026 !</h3>
-                    <p>Les places sont limitées. Réservez votre place dès aujourd'hui pour la session de printemps.</p>
-                </div>
+    <section id="stats" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+            <div class="p-6">
+                <div class="text-4xl font-bold text-emerald-600 mb-2">5000+</div>
+                <div class="text-gray-500">Étudiants formés</div>
             </div>
-            <div class="news-card">
-                <img src="https://picsum.photos/400/200?random=2" alt="Recrutement">
-                <div class="news-content">
-                    <span class="badge" style="background:var(--primary)">Recrutement</span>
-                    <h3>Nous cherchons un formateur</h3>
-                    <p>Vous maîtrisez la Darija et la pédagogie ? Rejoignez notre équipe dynamique !</p>
+            <div class="p-6">
+                <div class="text-4xl font-bold text-emerald-600 mb-2">98%</div>
+                <div class="text-gray-500">Satisfaction</div>
+            </div>
+            <div class="p-6">
+                <div class="text-4xl font-bold text-emerald-600 mb-2">12</div>
+                <div class="text-gray-500">Experts natifs</div>
+            </div>
+            <div class="p-6">
+                <div class="text-4xl font-bold text-emerald-600 mb-2">24/7</div>
+                <div class="text-gray-500">Support AI</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-16">Nos Abonnements <span class="text-emerald-600">Accessibles</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl border border-gray-200 card-3d">
+                    <h3 class="text-xl font-bold mb-4">Découverte</h3>
+                    <div class="text-4xl font-bold mb-6">199 DH <span class="text-sm font-normal text-gray-500">/mois</span></div>
+                    <ul class="space-y-4 mb-8 text-gray-600">
+                        <li><i class="fas fa-check text-emerald-500 mr-2"></i> Accès cours vidéos</li>
+                        <li><i class="fas fa-check text-emerald-500 mr-2"></i> Vocabulaire de base</li>
+                        <li><i class="fas fa-times text-red-500 mr-2"></i> Session live</li>
+                    </ul>
+                    <button onclick="selectPlan('Découverte', 199)" class="w-full py-3 border border-emerald-600 text-emerald-600 rounded-xl hover:bg-emerald-600 hover:text-white transition">Choisir</button>
+                </div>
+                <div class="bg-emerald-600 p-8 rounded-2xl border border-emerald-600 card-3d text-white scale-105 shadow-xl">
+                    <h3 class="text-xl font-bold mb-4">Intensif</h3>
+                    <div class="text-4xl font-bold mb-6">499 DH <span class="text-sm font-normal text-emerald-200">/mois</span></div>
+                    <ul class="space-y-4 mb-8 text-emerald-100">
+                        <li><i class="fas fa-check mr-2"></i> Tout du plan Découverte</li>
+                        <li><i class="fas fa-check mr-2"></i> 2 Sessions Live / semaine</li>
+                        <li><i class="fas fa-check mr-2"></i> Chatbot Premium LLM</li>
+                    </ul>
+                    <button onclick="selectPlan('Intensif', 499)" class="w-full py-3 bg-white text-emerald-600 rounded-xl font-bold hover:bg-gray-100 transition">Choisir</button>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-gray-200 card-3d">
+                    <h3 class="text-xl font-bold mb-4">Pro / MRE</h3>
+                    <div class="text-4xl font-bold mb-6">899 DH <span class="text-sm font-normal text-gray-500">/an</span></div>
+                    <ul class="space-y-4 mb-8 text-gray-600">
+                        <li><i class="fas fa-check text-emerald-500 mr-2"></i> Coaching personnalisé</li>
+                        <li><i class="fas fa-check text-emerald-500 mr-2"></i> Certificat de réussite</li>
+                        <li><i class="fas fa-check text-emerald-500 mr-2"></i> Accès illimité</li>
+                    </ul>
+                    <button onclick="selectPlan('Pro', 899)" class="w-full py-3 border border-emerald-600 text-emerald-600 rounded-xl hover:bg-emerald-600 hover:text-white transition">Choisir</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="activities">
-        <div class="container">
-            <h2>Nos Activités</h2>
-            <div class="act-grid">
-                <div class="act-card">
-                    <i class="fas fa-video"></i>
-                    <h3>Cours en direct</h3>
-                    <p>Interagissez en temps réel avec nos professeurs.</p>
+    <section id="news" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12">Actualités & <span class="text-emerald-600">Opportunités</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="group relative overflow-hidden rounded-2xl shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent flex flex-col justify-end p-6">
+                        <span class="bg-red-500 text-white text-xs px-2 py-1 rounded w-max mb-2">OFFRE LIMITÉE</span>
+                        <h3 class="text-white text-xl font-bold">Ouverture des inscriptions Session Printemps</h3>
+                    </div>
                 </div>
-                <div class="act-card">
-                    <i class="fas fa-users"></i>
-                    <h3>Ateliers Pratiques</h3>
-                    <p>Discussions de groupe pour pratiquer la langue.</p>
-                </div>
-                <div class="act-card">
-                    <i class="fas fa-gamepad"></i>
-                    <h3>Jeux de Rôle 3D</h3>
-                    <p>Simulations de situations réelles au Maroc.</p>
+                <div class="group relative overflow-hidden rounded-2xl shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent flex flex-col justify-end p-6">
+                        <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded w-max mb-2">RECRUTEMENT</span>
+                        <h3 class="text-white text-xl font-bold">Nous recherchons des formateurs passionnés !</h3>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="prix" class="container">
-        <h2>Des prix bas, une qualité pro</h2>
-        <div class="pricing-grid">
-            <div class="price-card">
-                <h3>Pack Basique</h3>
-                <div class="price">99 DH<small>/mois</small></div>
-                <ul>
-                    <li><i class="fas fa-check text-secondary"></i> Accès aux cours vidéos</li>
-                    <li><i class="fas fa-check text-secondary"></i> Support par email</li>
-                </ul>
-                <button class="btn" style="margin-top: 20px;">Choisir</button>
-            </div>
-            <div class="price-card popular">
-                <span class="badge" style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%);">Le plus choisi</span>
-                <h3>Pack Pro</h3>
-                <div class="price">199 DH<small>/mois</small></div>
-                <ul>
-                    <li><i class="fas fa-check"></i> Tout du pack Basique</li>
-                    <li><i class="fas fa-check"></i> 4 sessions live par mois</li>
-                    <li><i class="fas fa-check"></i> Accès au groupe WhatsApp</li>
-                </ul>
-                <button class="btn" style="margin-top: 20px;">Choisir</button>
+    <section class="py-20 bg-emerald-900 text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-16">Ils parlent de <span class="text-emerald-400">Nous</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6" id="testimonials-container">
+                </div>
+            
+            <div class="mt-20 max-w-2xl mx-auto bg-white/10 p-8 rounded-2xl backdrop-blur-md">
+                <h3 class="text-xl font-bold mb-4">Laissez votre avis</h3>
+                <div class="space-y-4">
+                    <input type="text" placeholder="Votre nom" class="w-full p-3 rounded bg-white/20 border border-white/30 text-white placeholder-white/60 outline-none">
+                    <select class="w-full p-3 rounded bg-white/20 border border-white/30 text-white outline-none">
+                        <option class="text-black">Expatrié</option>
+                        <option class="text-black">Étudiant</option>
+                        <option class="text-black">MRE</option>
+                        <option class="text-black">Formateur</option>
+                    </select>
+                    <textarea placeholder="Votre message..." class="w-full p-3 rounded bg-white/20 border border-white/30 text-white placeholder-white/60 h-32 outline-none"></textarea>
+                    <button class="w-full py-3 bg-emerald-500 rounded font-bold hover:bg-emerald-400">Publier l'avis</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="avis" class="reviews">
-        <div class="container">
-            <h2>Ce que disent nos étudiants</h2>
-            <div class="review-grid">
-                <div class="review-card">
-                    <div class="reviewer">
-                        <img src="https://picsum.photos/100/100?random=3" alt="Client 1">
-                        <div>
-                            <h4>Youssef T.</h4>
-                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        </div>
-                    </div>
-                    <p>"Excellente académie ! J'ai pu parler avec ma belle-famille marocaine en 3 mois."</p>
-                </div>
-                <div class="review-card">
-                    <div class="reviewer">
-                        <img src="https://picsum.photos/100/100?random=4" alt="Client 2">
-                        <div>
-                            <h4>Sarah M.</h4>
-                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
-                        </div>
-                    </div>
-                    <p>"Les profs sont incroyables. Les prix sont vraiment très bas pour cette qualité."</p>
-                </div>
-                <div class="review-card">
-                    <div class="reviewer">
-                        <img src="https://picsum.photos/100/100?random=5" alt="Client 3">
-                        <div>
-                            <h4>Jean-Luc D.</h4>
-                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        </div>
-                    </div>
-                    <p>"La méthode d'apprentissage est unique. Je recommande fortement."</p>
-                </div>
-                <div class="review-card">
-                    <div class="reviewer">
-                        <img src="https://picsum.photos/100/100?random=6" alt="Client 4">
-                        <div>
-                            <h4>Fatima E.</h4>
-                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        </div>
-                    </div>
-                    <p>"Parfait pour mes enfants nés à l'étranger pour garder un lien avec le pays."</p>
-                </div>
-                <div class="review-card">
-                    <div class="reviewer">
-                        <img src="https://picsum.photos/100/100?random=7" alt="Client 5">
-                        <div>
-                            <h4>Karim B.</h4>
-                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        </div>
-                    </div>
-                    <p>"Support très réactif via WhatsApp, et la plateforme est très pro."</p>
-                </div>
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div id="registration-success" class="hidden mb-8 p-6 bg-emerald-100 text-emerald-800 border-l-8 border-emerald-500 rounded-r-xl animate-bounce">
+                <h3 class="text-2xl font-bold">Félicitations ! 🎉</h3>
+                <p>Votre inscription au plan <span id="selected-plan-name" class="font-bold underline"></span> a été confirmée. Un conseiller vous contactera sous 24h.</p>
             </div>
 
-            <div class="add-review">
-                <h3>Laissez votre avis</h3>
-                <form onsubmit="alert('Merci pour votre avis !'); return false;">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Votre Nom" required>
+            <form id="signup-form" class="bg-gray-50 p-10 rounded-3xl shadow-2xl border border-gray-100">
+                <h2 class="text-3xl font-bold mb-8 text-center">Inscription Interactive</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Nom complet</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl border focus:ring-2 focus:ring-emerald-500 outline-none">
                     </div>
-                    <div class="form-group">
-                        <select class="form-control" required>
-                            <option value="">Note...</option>
-                            <option value="5">5 Étoiles</option>
-                            <option value="4">4 Étoiles</option>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Email</label>
+                        <input type="email" required class="w-full px-4 py-3 rounded-xl border focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Formule choisie</label>
+                        <select id="plan-select" class="w-full px-4 py-3 rounded-xl border bg-white focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <option value="Découverte">Découverte (199 DH)</option>
+                            <option value="Intensif" selected>Intensif (499 DH)</option>
+                            <option value="Pro">Pro (899 DH)</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <textarea class="form-control" placeholder="Votre expérience..." required></textarea>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Téléphone</label>
+                        <input type="tel" placeholder="+212..." class="w-full px-4 py-3 rounded-xl border focus:ring-2 focus:ring-emerald-500 outline-none">
                     </div>
-                    <button type="submit" class="btn">Soumettre</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <section class="container">
-        <h2>Questions Fréquentes</h2>
-        <div style="max-width: 800px; margin: 0 auto;">
-            <div class="faq-item">
-                <div class="faq-question">Faut-il un niveau de base pour commencer ? <i class="fas fa-chevron-down"></i></div>
-                <div class="faq-answer"><p>Non, nous avons des classes pour les grands débutants !</p></div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Comment se passe le paiement ? <i class="fas fa-chevron-down"></i></div>
-                <div class="faq-answer"><p>Le paiement est mensuel, sans engagement. Vous pouvez annuler quand vous voulez.</p></div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Puis-je changer d'horaire ? <i class="fas fa-chevron-down"></i></div>
-                <div class="faq-answer"><p>Oui, avec le Pack Pro, vous avez la flexibilité de modifier vos horaires.</p></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="inscription" class="activities">
-        <div class="container" style="max-width: 600px;">
-            <h2>Formulaire d'inscription</h2>
-            <form style="background: white; padding: 30px; border-radius: 15px; box-shadow: var(--shadow-3d);">
-                <div class="form-group">
-                    <label>Nom complet</label>
-                    <input type="text" class="form-control" required>
                 </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Téléphone (WhatsApp)</label>
-                    <input type="tel" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Niveau actuel</label>
-                    <select class="form-control">
-                        <option>Débutant</option>
-                        <option>Intermédiaire</option>
-                        <option>Avancé</option>
-                    </select>
-                </div>
-                <button type="button" class="btn" style="width: 100%;">S'inscrire</button>
+                <button type="submit" class="w-full mt-10 py-4 bg-emerald-600 text-white font-bold rounded-xl text-lg hover:bg-emerald-700 shadow-lg transform hover:scale-105 transition">Confirmer mon inscription</button>
             </form>
         </div>
     </section>
 
-    <a href="https://wa.me/212600000000" target="_blank" class="whatsapp-float">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <div class="chatbot-btn" id="openChat">
-        <i class="fas fa-robot"></i>
-    </div>
-    <div class="chatbot-window" id="chatWindow">
-        <div class="chat-header">
-            <span>Darija AI <i class="fas fa-bolt" style="color:#FCD34D;"></i></span>
-            <span class="close-chat" id="closeChat">&times;</span>
-        </div>
-        <div class="chat-body" id="chatBody">
-            <div class="msg bot">Salam ! Je suis l'IA de Darija Academy. Comment puis-je vous aider aujourd'hui ?</div>
-        </div>
-        <div class="chat-footer">
-            <input type="text" id="chatInput" placeholder="Posez une question...">
-            <button id="sendChat"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-
-    <footer>
-        <div class="container">
-            <h2>Contactez-nous</h2>
-            <p>Email : contact@darija-academy.ma | Tél : +212 600 000 000</p>
-            <div class="social-links" style="margin-top: 20px;">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-tiktok"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Questions Fréquentes</h2>
+            <div class="space-y-4">
+                <details class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 cursor-pointer">
+                    <summary class="font-bold text-emerald-800">Est-ce que je peux apprendre en travaillant ?</summary>
+                    <p class="mt-4 text-gray-600">Oui, nos modules sont conçus pour des sessions courtes de 15 minutes par jour.</p>
+                </details>
+                <details class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 cursor-pointer">
+                    <summary class="font-bold text-emerald-800">Comment se passe le paiement ?</summary>
+                    <p class="mt-4 text-gray-600">Par carte bancaire, virement Wafacash ou PayPal.</p>
+                </details>
             </div>
-            <p>&copy; 2026 Darija Academy. Tous droits réservés.</p>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+            <div>
+                <h3 class="text-2xl font-bold text-emerald-500 mb-6">Darija Academy</h3>
+                <p class="text-gray-400 leading-relaxed">Promouvoir la culture et la langue marocaine à travers le monde avec technologie et passion.</p>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6">Suivez-nous</h4>
+                <div class="flex justify-center md:justify-start space-x-6">
+                    <a href="https://tiktok.com" class="text-3xl hover:text-emerald-500 transition"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://instagram.com" class="text-3xl hover:text-pink-500 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com" class="text-3xl hover:text-blue-500 transition"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6">Contact direct</h4>
+                <p class="text-gray-400 italic">"Ahlan bikom f'ay weqt!"</p>
+                <p class="mt-2">contact@darijaacademy.ma</p>
+            </div>
+        </div>
+        <div class="text-center mt-12 pt-8 border-t border-gray-800 text-gray-500">
+            &copy; 2026 Darija Academy - Tous droits réservés.
         </div>
     </footer>
 
+    <div id="chatbot-ui" class="fixed bottom-6 right-6 z-[60]">
+        <button onclick="toggleChat()" class="w-16 h-16 bg-emerald-600 rounded-full shadow-2xl text-white text-2xl hover:scale-110 transition flex items-center justify-center border-4 border-white">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div id="chat-window" class="hidden absolute bottom-20 right-0 w-80 md:w-96 bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col">
+            <div class="bg-emerald-600 p-4 text-white font-bold flex justify-between items-center">
+                <span>DarijaBot AI (LLM)</span>
+                <button onclick="toggleChat()"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="chat-messages" class="h-80 overflow-y-auto p-4 space-y-4 text-sm bg-gray-50">
+                <div class="bg-emerald-100 p-3 rounded-tr-2xl rounded-bl-2xl text-emerald-800 w-3/4">
+                    Salam ! Je suis l'intelligence artificielle de Darija Academy. Comment puis-je vous aider ?
+                </div>
+            </div>
+            <div class="p-4 border-t flex space-x-2">
+                <input id="chat-input" type="text" placeholder="Posez votre question..." class="flex-1 p-2 border rounded-full outline-none">
+                <button onclick="sendMessage()" class="bg-emerald-600 text-white p-2 rounded-full w-10 h-10"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/212600000000" class="fixed bottom-6 left-6 z-[60] group">
+        <div class="bg-green-500 p-4 rounded-full shadow-[0_10px_20px_rgba(34,197,94,0.4)] hover:shadow-green-400/60 transform hover:-translate-y-2 transition-all duration-300">
+            <i class="fab fa-whatsapp text-white text-3xl"></i>
+        </div>
+        <span class="absolute left-20 bottom-6 bg-white px-4 py-2 rounded-lg shadow-lg text-sm font-bold opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap">Besoin d'aide ?</span>
+    </a>
+
     <script>
-        // Animations des statistiques
-        const counters = document.querySelectorAll('.counter');
-        const speed = 200;
-        counters.forEach(counter => {
-            const updateCount = () => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                const inc = target / speed;
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + inc);
-                    setTimeout(updateCount, 1);
-                } else {
-                    counter.innerText = target;
-                }
-            };
-            // Déclencher quand on scrolle (version simplifiée)
-            window.addEventListener('scroll', () => {
-                if(window.scrollY > 300) { updateCount(); }
-            });
-        });
-
-        // FAQ Accordion
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            item.querySelector('.faq-question').addEventListener('click', () => {
-                item.classList.toggle('active');
-            });
-        });
-
-        // Chatbot Logic (Simulateur LLM)
-        const chatWindow = document.getElementById('chatWindow');
-        const openChat = document.getElementById('openChat');
-        const closeChat = document.getElementById('closeChat');
-        const chatInput = document.getElementById('chatInput');
-        const sendChat = document.getElementById('sendChat');
-        const chatBody = document.getElementById('chatBody');
-
-        openChat.addEventListener('click', () => chatWindow.style.display = 'flex');
-        closeChat.addEventListener('click', () => chatWindow.style.display = 'none');
-
-        const botResponses = [
-            "Nos cours commencent à 99 DH/mois.",
-            "Oui, nous avons un groupe WhatsApp pour les membres Pro.",
-            "Vous pouvez vous inscrire via le formulaire sur cette page !",
-            "Nous recrutons actuellement des formateurs, consultez les actualités.",
-            "La Darija est facile avec notre méthode 3D interactive !"
+        // Data for Testimonials
+        const testimonials = [
+            { name: "Sarah J.", type: "Expatriée", text: "Incroyable ! J'ai appris les bases en 2 semaines.", rating: 5, photo: "https://i.pravatar.cc/150?u=1" },
+            { name: "Karim M.", type: "MRE", text: "Enfin je peux discuter avec ma grand-mère au bled.", rating: 5, photo: "https://i.pravatar.cc/150?u=2" },
+            { name: "John D.", type: "Étudiant", text: "Le chatbot m'aide énormément à pratiquer.", rating: 4, photo: "https://i.pravatar.cc/150?u=3" },
+            { name: "Laila H.", type: "Formateur", text: "Une plateforme ergonomique pour enseigner.", rating: 5, photo: "https://i.pravatar.cc/150?u=4" },
+            { name: "Emma L.", type: "Expatriée", text: "Le rapport qualité/prix est imbattable.", rating: 5, photo: "https://i.pravatar.cc/150?u=5" }
         ];
 
-        sendChat.addEventListener('click', handleChat);
-        chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleChat(); });
+        const container = document.getElementById('testimonials-container');
+        testimonials.forEach(t => {
+            container.innerHTML += `
+                <div class="bg-white/5 p-6 rounded-2xl border border-white/10 hover:bg-white/10 transition">
+                    <img src="${t.photo}" class="w-16 h-16 rounded-full mx-auto mb-4 border-2 border-emerald-500">
+                    <h4 class="font-bold text-center">${t.name}</h4>
+                    <p class="text-xs text-emerald-400 text-center mb-4">${t.type}</p>
+                    <p class="text-sm italic text-gray-300">"${t.text}"</p>
+                    <div class="text-yellow-400 text-center mt-2">${'★'.repeat(t.rating)}</div>
+                </div>
+            `;
+        });
 
-        function handleChat() {
-            const text = chatInput.value.trim();
-            if(!text) return;
+        // Registration Logic
+        function selectPlan(name, price) {
+            document.getElementById('plan-select').value = name;
+            window.location.href = "#contact";
+        }
+
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const plan = document.getElementById('plan-select').value;
+            document.getElementById('selected-plan-name').innerText = plan;
+            document.getElementById('signup-form').classList.add('hidden');
+            document.getElementById('registration-success').classList.remove('hidden');
+        });
+
+        // Chatbot Logic
+        function toggleChat() {
+            document.getElementById('chat-window').classList.toggle('hidden');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const messages = document.getElementById('chat-messages');
+            if(input.value.trim() === "") return;
+
+            messages.innerHTML += `<div class="bg-gray-200 p-3 rounded-tl-2xl rounded-br-2xl text-gray-800 self-end w-3/4 ml-auto">${input.value}</div>`;
             
-            // Message Utilisateur
-            const userMsg = document.createElement('div');
-            userMsg.className = 'msg user';
-            userMsg.textContent = text;
-            chatBody.appendChild(userMsg);
-            chatInput.value = '';
-            chatBody.scrollTop = chatBody.scrollHeight;
-
-            // Simulation Réponse LLM
             setTimeout(() => {
-                const botMsg = document.createElement('div');
-                botMsg.className = 'msg bot';
-                botMsg.textContent = botResponses[Math.floor(Math.random() * botResponses.length)];
-                chatBody.appendChild(botMsg);
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1000);
+                messages.innerHTML += `<div class="bg-emerald-100 p-3 rounded-tr-2xl rounded-bl-2xl text-emerald-800 w-3/4 animate-pulse">DarijaBot réfléchit...</div>`;
+                messages.scrollTop = messages.scrollHeight;
+            }, 500);
+
+            input.value = "";
         }
     </script>
 </body>
